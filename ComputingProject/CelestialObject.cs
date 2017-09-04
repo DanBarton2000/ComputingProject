@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Shapes;
-using System.Windows.Media;
+//using System.Windows.Media;
+using System.Drawing;
 
 namespace ComputingProject
 {
@@ -12,6 +13,8 @@ namespace ComputingProject
         // Mass of the objects measured in kilogrammes
         private double mass;
         private double totalVelocity;
+
+        public Brush colour;
 
         public double Mass { get { return mass; } set { if (value > 0) { mass = value; } } }
         public double TotalVelocity { get { return totalVelocity; } set {
@@ -35,12 +38,13 @@ namespace ComputingProject
 
         public CelestialObject() { }
         
-        public CelestialObject(string name, double mass, double velocity, double bearing, Vector position) {
+        public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour) {
             this.name = name;
             this.mass = mass;
             TotalVelocity = velocity;
             Bearing = bearing;
             this.position = position;
+            this.colour = colour;
             ObjectManager.allObjects.Add(this);
         }
 
@@ -70,20 +74,11 @@ namespace ComputingProject
             return forces;
         }
 
-        public Ellipse Draw() {
-            Ellipse circle = new Ellipse();
-            SolidColorBrush scb = new SolidColorBrush();
-            scb.Color = Color.FromArgb(100, 100, 100, 0);
-            circle.Fill = scb;
-            circle.Width = 100;
-            circle.Height = 100;
-            return circle;
-        }
         #endregion
 
         #region Static Methods
         public static CelestialObject SpawnCopy(CelestialObject co, Vector v) {
-            return new CelestialObject(co.Name + "_COPY", co.Mass, co.totalVelocity, co.Bearing, v);
+            return new CelestialObject(co.Name + "_COPY", co.Mass, co.totalVelocity, co.Bearing, v, co.colour);
         }
 
         #endregion
