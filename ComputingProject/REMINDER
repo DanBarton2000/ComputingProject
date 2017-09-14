@@ -1,2 +1,4 @@
 Star Class has no constuctor (does it need one?)
 Vector Class has no operator method for division
+Velocity should be of type Vector and not of type Velocity
+Anti-Aliasing needs to be added to make sure that the objects do not have jagged edges
