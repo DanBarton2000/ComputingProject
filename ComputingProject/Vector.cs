@@ -138,6 +138,11 @@ namespace ComputingProject
             return new Vector(v1.x * scaler, v1.y * scaler);
         }
 
+        public static Vector operator /(Vector v1, double scaler)
+        {
+            return new Vector(v1.x / scaler, v1.y / scaler);
+        }
+
         public static bool operator ==(Vector v1, Vector v2)
         {
             return v1.x == v2.x && v1.y == v2.y;

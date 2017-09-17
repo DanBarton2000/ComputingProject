@@ -23,6 +23,12 @@ namespace ComputingProject.Collision
             points = new Vector[maxNodeCount];
         }
 
+        QuadTree(AABB boundary)
+        {
+            points = new Vector[maxNodeCount];
+            Boundary = boundary;
+        }
+
         bool Insert(Vector point) {
             if (!Boundary.ContainsPoint(point)) {
                 return false;
@@ -36,6 +42,22 @@ namespace ComputingProject.Collision
             }
 
             return false;
+        }
+
+        void SubDivide() {
+            Vector size = Boundary.halfDimension / 2;
+
+            Vector centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
+            northWest = new QuadTree(new AABB(centre, size));
+
+            centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
+            northEast = new QuadTree(new AABB(centre, size));
+            
+            centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
+            southWest = new QuadTree(new AABB(centre, size));
+            
+            centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
+            southEast = new QuadTree(new AABB(centre, size));
         }
 
         List<Vector> QueryRange(AABB range) {
