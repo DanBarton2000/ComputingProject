@@ -110,7 +110,7 @@ namespace ComputingProject
             return Math.Sqrt(Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2));
         }
 
-        public static double DistanceSqrt(Vector v1, Vector v2)
+        public static double DistanceSqr(Vector v1, Vector v2)
         {
             return Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2);
         }
