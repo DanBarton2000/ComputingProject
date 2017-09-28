@@ -50,7 +50,7 @@ namespace ComputingProject
 
         public double[] Attraction(CelestialObject co) {
             double[] forces = new double[2];
-            double distance = Vector.DistanceSqrt(this.position, co.position);
+            double distance = Vector.DistanceSqr(this.position, co.position);
 
             if (distance == 0) {
                 Console.WriteLine("Objects {0} {1} are on top of each other!", this.Name, co.Name);
