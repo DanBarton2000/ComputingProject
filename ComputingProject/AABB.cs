@@ -31,7 +31,7 @@ namespace ComputingProject.Collision
         public bool IntersectsAABB(AABB box) {
             bool minX = centre.x + halfDimension.x > box.centre.x - box.halfDimension.x;
             bool maxX = centre.x - halfDimension.x < box.centre.x + box.halfDimension.x;
-            bool minY = centre.y + halfDimension.y > box.centre.y + box.halfDimension.y;
+            bool minY = centre.y + halfDimension.y > box.centre.y - box.halfDimension.y;
             bool maxY = centre.y - halfDimension.y < box.centre.y + box.halfDimension.y;
 
             if (minX || maxX || minY || maxY) {

@@ -41,7 +41,31 @@ namespace ComputingProject.Collision
                 }
             }
 
+            if (northWest == null) {
+                SubDivide();
+            }
+
+            if (northWest.Insert(point))
+                return true;
+
+            if (northEast.Insert(point))
+                return true;
+
+            if (southWest.Insert(point))
+                return true;
+
+            if (southEast.Insert(point))
+                return true;
+
             return false;
+        }
+
+        void Delete(Vector point) {
+            for (int i = 0; i < points.Length; i++) {
+                if (points[i] == point) {
+                    points[i] = null;
+                }
+            }
         }
 
         void SubDivide() {
