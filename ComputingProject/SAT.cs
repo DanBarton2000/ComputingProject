@@ -75,7 +75,7 @@ namespace ComputingProject.Collision
                 max1 = Math.Max(max1, projection);
             }
 
-            foreach (Vector point in col1.Vertices) {
+            foreach (Vector point in col2.Vertices) {
                 double projection = Vector.Dot(point, normal);
                 min2 = Math.Min(min2, projection);
                 max2 = Math.Max(max2, projection);
