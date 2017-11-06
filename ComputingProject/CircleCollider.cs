@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    class CircleCollider : Collider2D
+    public class CircleCollider : Collider2D
     {
         public Vector centre { get; }
         public double radius { get; }

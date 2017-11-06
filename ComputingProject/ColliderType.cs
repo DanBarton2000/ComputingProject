@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    enum ColliderType
+    public enum ColliderType
     {
         Circle,
         Polygon

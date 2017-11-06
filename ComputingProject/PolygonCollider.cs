@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    class PolygonCollider : Collider2D
+    public class PolygonCollider : Collider2D
     {
         public List<Vector> Vertices { get; }
 

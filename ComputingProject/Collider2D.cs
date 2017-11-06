@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    class Collider2D
+    public class Collider2D
     {
         public bool isColliding;
         public CelestialObject attachedObject { get; protected set; }

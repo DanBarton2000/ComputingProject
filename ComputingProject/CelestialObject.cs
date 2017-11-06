@@ -2,6 +2,7 @@
 using System.Windows.Shapes;
 //using System.Windows.Media;
 using System.Drawing;
+using ComputingProject.Collision;
 
 namespace ComputingProject
 {
@@ -32,6 +33,7 @@ namespace ComputingProject
     
         public string Name { get { return name; } set { if (value != null || value != "") name = value; } }
 
+        public Collider2D collider;
         #endregion
 
         #region Methods
