@@ -40,13 +40,14 @@ namespace ComputingProject
 
         public CelestialObject() { }
         
-        public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour) {
+        public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
             TotalVelocity = velocity;
             Bearing = bearing;
             this.position = position;
             this.colour = colour;
+            collider = col;
             ObjectManager.allObjects.Add(this);
         }
 
