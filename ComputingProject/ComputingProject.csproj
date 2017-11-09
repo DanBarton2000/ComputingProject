@@ -49,6 +49,8 @@
     <Compile Include="Collider2D.cs" />
     <Compile Include="ColliderType.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DebugTools.cs" />
+    <Compile Include="Load.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="PolygonCollider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

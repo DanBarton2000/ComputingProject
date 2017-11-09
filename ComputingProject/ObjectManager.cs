@@ -84,8 +84,9 @@ namespace ComputingProject
                         }
                     }
                 }
-
-                Console.WriteLine("OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
+                if (DebugTools.DebugMode) {
+                    Console.WriteLine("OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
+                }
             }
         }
 
