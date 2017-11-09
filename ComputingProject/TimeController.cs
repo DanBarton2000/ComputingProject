@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ComputingProject {
-    class TimeController {
+    public class TimeController {
         double defaultTimeStep;
         public double currentTimeStep { get; private set; }
         double pauseTimeStep;

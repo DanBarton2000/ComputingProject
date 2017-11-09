@@ -48,7 +48,7 @@ namespace ComputingProject
             this.position = position;
             this.colour = colour;
             collider = col;
-            ObjectManager.allObjects.Add(this);
+            ObjectManager.AddObject(this);
         }
 
         public double[] Attraction(CelestialObject co) {
@@ -80,8 +80,24 @@ namespace ComputingProject
         #endregion
 
         #region Static Methods
-        public static CelestialObject SpawnCopy(CelestialObject co, Vector v) {
-            return new CelestialObject(co.Name + "_COPY", co.Mass, co.totalVelocity, co.Bearing, v, co.colour);
+        public static CelestialObject SpawnCopy(CelestialObject co, Vector newPosition) {
+            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, co.totalVelocity, co.Bearing, newPosition, co.colour, co.collider);
+            if (coObj.collider != null) {
+                if (coObj.collider.colliderType == ColliderType.Circle) {
+                    CircleCollider cc = (CircleCollider)coObj.collider;
+                    cc.centre.Set(newPosition.x, newPosition.y);
+                }
+                else if (coObj.collider.colliderType == ColliderType.Polygon) {
+                    Vector difference = co.position - newPosition;
+                    PolygonCollider pc = (PolygonCollider)coObj.collider;
+
+                    foreach (Vector vert in pc.Vertices) {
+                        vert.x += difference.x;
+                        vert.y += difference.y;
+                    }
+                }
+            }
+            return coObj;
         }
 
         #endregion

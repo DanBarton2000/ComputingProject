@@ -13,17 +13,27 @@ namespace ComputingProject
 
         private static double fx, fy;
 
-        public static List<CelestialObject> allObjects = new List<CelestialObject>();
+        public static List<CelestialObject> AllObjects { get; private set; } = new List<CelestialObject>();
         #endregion
 
-        #region Methods
+        #region Static Methods
+        /// <summary>
+        /// Find the first object with the name "name" and then return it
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>The object with the name</returns>
         public static CelestialObject FindObjectWithName(string name) {
-            CelestialObject co = allObjects.First(s => s.Name == name);
+            CelestialObject co = AllObjects.First(s => s.Name == name);
             return co;
         }
 
+        /// <summary>
+        /// Returns a list of objects of type "type"
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static List<CelestialObject> FindObjectsOfType(Type type) {
-            return allObjects.Where(x => x.GetType() == type).ToList();
+            return AllObjects.Where(x => x.GetType() == type).ToList();
         }
 
         public static void Update(double timeStep, double scale) {
@@ -33,10 +43,10 @@ namespace ComputingProject
             }
 
             Dictionary<CelestialObject, double[]> forces = new Dictionary<CelestialObject, double[]>();
-            foreach (CelestialObject co in allObjects) {
+            foreach (CelestialObject co in AllObjects) {
                 fx = 0;
                 fy = 0;
-                foreach (CelestialObject cobj in allObjects) {
+                foreach (CelestialObject cobj in AllObjects) {
                     if (co != cobj) {
                         double[] force = co.Attraction(cobj);
                         fx += force[0];
@@ -47,7 +57,7 @@ namespace ComputingProject
                 forces.Add(co, totalForces);
             }
 
-            foreach (CelestialObject co in allObjects) {
+            foreach (CelestialObject co in AllObjects) {
                 double[] f = forces[co];
                 double massTimeStep = co.Mass * timeStep;
                 co.velocity.x += f[0] / massTimeStep;
@@ -66,7 +76,7 @@ namespace ComputingProject
                         cc.centre.Set(co.position.x, co.position.y);
                     }
                     else if (co.collider.colliderType == ColliderType.Polygon) {
-                        // Update the position of the vertices
+                        // Update the position of the vertices on the polygon collider
                         PolygonCollider pc = (PolygonCollider)co.collider;
                         foreach (Vector vert in pc.Vertices) {
                             vert.x += addPositionX;
@@ -77,6 +87,10 @@ namespace ComputingProject
 
                 Console.WriteLine("OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
             }
+        }
+
+        public static void AddObject(CelestialObject co) {
+            AllObjects.Add(co);
         }
         #endregion
     }
