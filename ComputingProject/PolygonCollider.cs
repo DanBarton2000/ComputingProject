@@ -8,10 +8,11 @@ namespace ComputingProject.Collision
 {
     public class PolygonCollider : Collider2D
     {
-        public List<Vector> Vertices { get; }
+        public List<Vector> Vertices { get; private set; } = new List<Vector>();
 
-        PolygonCollider() {
+        PolygonCollider(List<Vector> vertices) {
             colliderType = ColliderType.Polygon;
+            Vertices = vertices;
         }
     }
 }

@@ -8,11 +8,13 @@ namespace ComputingProject.Collision
 {
     public class CircleCollider : Collider2D
     {
-        public Vector centre { get; }
-        public double radius { get; }
+        public Vector centre { get; private set; }
+        public double radius { get; private set; }
 
-        CircleCollider() {
+        CircleCollider(Vector centre, double radius) {
             colliderType = ColliderType.Circle;
+            this.centre = centre;
+            this.radius = radius;
         }
     }
 }

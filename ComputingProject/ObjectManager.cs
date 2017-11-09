@@ -31,7 +31,7 @@ namespace ComputingProject
         /// Returns a list of objects of type "type"
         /// </summary>
         /// <param name="type"></param>
-        /// <returns></returns>
+        /// <returns>List of objects of type "type"</returns>
         public static List<CelestialObject> FindObjectsOfType(Type type) {
             return AllObjects.Where(x => x.GetType() == type).ToList();
         }

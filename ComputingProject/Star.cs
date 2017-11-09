@@ -8,14 +8,18 @@ namespace ComputingProject
 {
     public class Star : CelestialObject
     {
-        public double SolarMassOfStar { get { return this.Mass / Constants.SolarMass; } }
+        public double SolarMassOfStar { get {
+                return Mass / Constants.SolarMass;
+            }
+        }
+
         public double Luminosity { get {
                 return Constants.SolarLuminosity * Math.Pow(SolarMassOfStar, 3.5);
             }
         }
 
         public double LifeTime() {
-            return (this.SolarMassOfStar / Constants.SolarMass) * Math.Pow(10, 10);
+            return (SolarMassOfStar / Constants.SolarMass) * Math.Pow(10, 10);
         }
 
         public double[] HabitableZone() {
