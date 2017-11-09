@@ -53,8 +53,11 @@ namespace ComputingProject
                 co.velocity.x += f[0] / massTimeStep;
                 co.velocity.y += f[1] / massTimeStep;
 
-                co.position.x += co.velocity.x * timeStep * scale;
-                co.position.y += co.velocity.y * timeStep * scale;
+                double addPositionX = co.velocity.x * timeStep * scale;
+                double addPositionY = co.velocity.y * timeStep * scale;
+
+                co.position.x += addPositionX;
+                co.position.y += addPositionY;
 
                 if (co.collider != null) {
                     if (co.collider.colliderType == ColliderType.Circle) {
@@ -66,8 +69,8 @@ namespace ComputingProject
                         // Update the position of the vertices
                         PolygonCollider pc = (PolygonCollider)co.collider;
                         foreach (Vector vert in pc.Vertices) {
-                            vert.x += co.velocity.x * timeStep * scale;
-                            vert.y += co.velocity.y * timeStep * scale;
+                            vert.x += addPositionX;
+                            vert.y += addPositionY;
                         }
                     }
                 }
