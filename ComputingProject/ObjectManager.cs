@@ -27,6 +27,11 @@ namespace ComputingProject
         }
 
         public static void Update(double timeStep, double scale) {
+
+            if (TimeController.isPaused) {
+                return;
+            }
+
             Dictionary<CelestialObject, double[]> forces = new Dictionary<CelestialObject, double[]>();
             foreach (CelestialObject co in allObjects) {
                 fx = 0;

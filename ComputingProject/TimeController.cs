@@ -10,7 +10,7 @@ namespace ComputingProject {
         public double currentTimeStep { get; private set; }
         double pauseTimeStep;
 
-        bool isPaused = false;
+        public static bool isPaused { get; private set; } = false;
 
         TimeController(double timeStep) {
             defaultTimeStep = timeStep;
