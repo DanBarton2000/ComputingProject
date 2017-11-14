@@ -25,6 +25,10 @@ namespace ComputingProject.Collision
 
         public QuadTree(AABB boundary)
         {
+            Type type = typeof(T);
+            if (type.GetType() != typeof(CelestialObject) || type.GetType() != typeof(Vector)) {
+                throw new ApplicationException("Invalid type!");
+            }
             points = new T[maxNodeCount];
             Boundary = boundary;
         }
