@@ -6,33 +6,43 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    class QuadTree
+    public class QuadTree<T> where T : class
     {
         readonly int maxNodeCount = 4;
         
         public AABB Boundary { get; }
 
-        Vector[] points;
+        T[] points;
 
-        QuadTree northWest;
-        QuadTree northEast;
-        QuadTree southWest;
-        QuadTree southEast;
+        QuadTree<T> northWest;
+        QuadTree<T> northEast;
+        QuadTree<T> southWest;
+        QuadTree<T> southEast;
 
         QuadTree() {
-            points = new Vector[maxNodeCount];
+            points = new T[maxNodeCount];
         }
 
-        QuadTree(AABB boundary)
+        public QuadTree(AABB boundary)
         {
-            points = new Vector[maxNodeCount];
+            points = new T[maxNodeCount];
             Boundary = boundary;
         }
 
-        bool Insert(Vector point) {
-            if (!Boundary.ContainsPoint(point)) {
-                return false;
+        public bool Insert(T point) {
+            if (point.GetType() == typeof(CelestialObject)) {
+                CelestialObject co = point as CelestialObject;
+                if (!Boundary.ContainsPoint(co.position)) {
+                    return false;
+                }
             }
+            else if (point.GetType() == typeof(Vector)) {
+                Vector vec = point as Vector;
+                if (!Boundary.ContainsPoint(vec)) {
+                        return false;
+                }
+           }
+            
 
             for (int i = 0; i < points.Length; i++) {
                 if (points[i] == null) {
@@ -60,7 +70,7 @@ namespace ComputingProject.Collision
             return false;
         }
 
-        void Delete(Vector point) {
+        public void Delete(T point) {
             for (int i = 0; i < points.Length; i++) {
                 if (points[i] == point) {
                     points[i] = null;
@@ -68,32 +78,42 @@ namespace ComputingProject.Collision
             }
         }
 
-        void SubDivide() {
+        public void SubDivide() {
             Vector size = Boundary.halfDimension / 2;
 
             Vector centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
-            northWest = new QuadTree(new AABB(centre, size));
+            northWest = new QuadTree<T>(new AABB(centre, size));
 
             centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
-            northEast = new QuadTree(new AABB(centre, size));
+            northEast = new QuadTree<T>(new AABB(centre, size));
             
             centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
-            southWest = new QuadTree(new AABB(centre, size));
+            southWest = new QuadTree<T>(new AABB(centre, size));
             
             centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
-            southEast = new QuadTree(new AABB(centre, size));
+            southEast = new QuadTree<T>(new AABB(centre, size));
         }
 
-        List<Vector> QueryRange(AABB range) {
-            List<Vector> pointsInRange = new List<Vector>();
+        public List<T> QueryRange(AABB range) {
+            List<T> pointsInRange = new List<T>();
 
             if (!Boundary.IntersectsAABB(range)) {
                 return pointsInRange;
             }
 
-            for (int i = 0; i < points.Length; i++) {
-                if (range.ContainsPoint(points[i])) {
-                    pointsInRange.Add(points[i]);
+            foreach (T point in points) {
+                if (point.GetType() == typeof(CelestialObject)) {
+                    CelestialObject co = point as CelestialObject;
+                    if (range.ContainsPoint(co.position)) {
+                        pointsInRange.Add(point);
+                    }
+
+                }
+                else if (point.GetType() == typeof(Vector)) {
+                    Vector vec = point as Vector;
+                    if (range.ContainsPoint(vec)) {
+                        pointsInRange.Add(point);
+                    }
                 }
             }
 
@@ -108,5 +128,13 @@ namespace ComputingProject.Collision
 
             return pointsInRange;
         }
+
+        public void ClearQuad() {
+            northEast = null;
+            northWest = null;
+            southEast = null;
+            southWest = null;
+        }
     }
+
 }

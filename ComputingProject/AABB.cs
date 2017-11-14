@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    struct AABB
+    public struct AABB
     {
         public Vector centre;
         public Vector halfDimension;
