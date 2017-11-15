@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    public class QuadTree<T> where T : class
+    public class QuadTree<T> where T : IQuadtreeObject
     {
         readonly int maxNodeCount = 4;
         
@@ -25,28 +25,14 @@ namespace ComputingProject.Collision
 
         public QuadTree(AABB boundary)
         {
-            Type type = typeof(T);
-            if (type.GetType() != typeof(CelestialObject) || type.GetType() != typeof(Vector)) {
-                throw new ApplicationException("Invalid type!");
-            }
             points = new T[maxNodeCount];
             Boundary = boundary;
         }
 
         public bool Insert(T point) {
-            if (point.GetType() == typeof(CelestialObject)) {
-                CelestialObject co = point as CelestialObject;
-                if (!Boundary.ContainsPoint(co.position)) {
-                    return false;
-                }
-            }
-            else if (point.GetType() == typeof(Vector)) {
-                Vector vec = point as Vector;
-                if (!Boundary.ContainsPoint(vec)) {
-                        return false;
-                }
-           }
-            
+            if (!Boundary.ContainsPoint(point.position)) {
+                return false;
+             }
 
             for (int i = 0; i < points.Length; i++) {
                 if (points[i] == null) {
@@ -76,8 +62,8 @@ namespace ComputingProject.Collision
 
         public void Delete(T point) {
             for (int i = 0; i < points.Length; i++) {
-                if (points[i] == point) {
-                    points[i] = null;
+                if (EqualityComparer<T>.Default.Equals(points[i], point)) {
+                    points[i] = default(T);
                 }
             }
         }
@@ -106,19 +92,9 @@ namespace ComputingProject.Collision
             }
 
             foreach (T point in points) {
-                if (point.GetType() == typeof(CelestialObject)) {
-                    CelestialObject co = point as CelestialObject;
-                    if (range.ContainsPoint(co.position)) {
-                        pointsInRange.Add(point);
-                    }
-
-                }
-                else if (point.GetType() == typeof(Vector)) {
-                    Vector vec = point as Vector;
-                    if (range.ContainsPoint(vec)) {
-                        pointsInRange.Add(point);
-                    }
-                }
+                if (range.ContainsPoint(point.position)) {
+                    pointsInRange.Add(point);
+                }         
             }
 
             if (northWest == null) {
