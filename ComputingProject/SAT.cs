@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    class SAT
+    public class SAT
     {
 
-        bool IsCollidingCircles(CircleCollider col1, CircleCollider col2) {
+        public bool IsCollidingCircles(CircleCollider col1, CircleCollider col2) {
             Vector v = col1.centre - col2.centre;
             if (v.Magnitude < col1.radius + col2.radius) {
                 return true;
@@ -17,7 +17,7 @@ namespace ComputingProject.Collision
             return false;
         }
 
-        bool IsCollidingPolygonCircle(PolygonCollider col1, CircleCollider col2) {
+        public bool IsCollidingPolygonCircle(PolygonCollider col1, CircleCollider col2) {
             List<Vector> edges = new List<Vector>();
             edges = CalculateEdges(col1.Vertices);
             for (int i = 0; i < edges.Count; i++) {
@@ -28,7 +28,7 @@ namespace ComputingProject.Collision
             return false;
         }
 
-        bool IsCollidingPolygons(PolygonCollider col1, PolygonCollider col2) {
+        public bool IsCollidingPolygons(PolygonCollider col1, PolygonCollider col2) {
             List<Vector> edges = CalculateEdges(col1.Vertices);
             edges.AddRange(CalculateEdges(col2.Vertices));
 

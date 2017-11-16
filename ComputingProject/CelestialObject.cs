@@ -6,7 +6,7 @@ using ComputingProject.Collision;
 
 namespace ComputingProject
 {
-    public class CelestialObject
+    public class CelestialObject : IQuadtreeObject
     {
         #region Variables
         private string name;
@@ -33,7 +33,7 @@ namespace ComputingProject
     
         public string Name { get { return name; } set { if (value != null || value != "") name = value; } }
 
-        public Collider2D collider;
+        public Collider2D collider { get; set; }
         #endregion
 
         #region Methods

@@ -131,6 +131,9 @@ namespace ComputingProject
 
         public static Vector operator *(Vector v1, double scaler)
         {
+            if (ReferenceEquals(v1, null)) {
+                return null;
+            }
             return new Vector(v1.x * scaler, v1.y * scaler);
         }
 
@@ -141,12 +144,24 @@ namespace ComputingProject
 
         public static bool operator ==(Vector v1, Vector v2)
         {
-            return v1.x == v2.x && v1.y == v2.y;
+            if (!ReferenceEquals(v1, null) && !ReferenceEquals(v2, null)) {
+                return v1.x == v2.x && v1.y == v2.y;
+            }
+            else if (ReferenceEquals(v1, null) && ReferenceEquals(v2, null)) {
+                return true;
+            }
+            return false;
         }
 
         public static bool operator !=(Vector v1, Vector v2)
         {
-            return v1.x != v2.x || v1.y != v2.y;
+            if (!ReferenceEquals(v1, null) && !ReferenceEquals(v2, null)) {
+                return v1.x != v2.x || v1.y != v2.y;
+            }
+            else if (ReferenceEquals(v1, null) && ReferenceEquals(v2, null)) {
+                return true;
+            }
+            return false;
         }
 
         #endregion

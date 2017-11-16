@@ -6,32 +6,33 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    public class QuadTree
+    public class QuadTree<T> where T : IQuadtreeObject
     {
         readonly int maxNodeCount = 4;
         
-        public AABB Boundary { get; private set; }
+        public AABB Boundary { get; }
 
-        Vector[] points;
+        T[] points;
 
-        QuadTree northWest;
-        QuadTree northEast;
-        QuadTree southWest;
-        QuadTree southEast;
+        QuadTree<T> northWest;
+        QuadTree<T> northEast;
+        QuadTree<T> southWest;
+        QuadTree<T> southEast;
 
         QuadTree() {
-            points = new Vector[maxNodeCount];
+            points = new T[maxNodeCount];
         }
 
-        public QuadTree(AABB boundary) {
-            points = new Vector[maxNodeCount];
+        public QuadTree(AABB boundary)
+        {
+            points = new T[maxNodeCount];
             Boundary = boundary;
         }
 
-        public bool Insert(Vector point) {
-            if (!Boundary.ContainsPoint(point)) {
+        public bool Insert(T point) {
+            if (!Boundary.ContainsPoint(point.position)) {
                 return false;
-            }
+             }
 
             for (int i = 0; i < points.Length; i++) {
                 if (points[i] == null) {
@@ -59,10 +60,10 @@ namespace ComputingProject.Collision
             return false;
         }
 
-        public void Delete(Vector point) {
+        public void Delete(T point) {
             for (int i = 0; i < points.Length; i++) {
-                if (points[i] == point) {
-                    points[i] = null;
+                if (EqualityComparer<T>.Default.Equals(points[i], point)) {
+                    points[i] = default(T);
                 }
             }
         }
@@ -71,29 +72,29 @@ namespace ComputingProject.Collision
             Vector size = Boundary.halfDimension / 2;
 
             Vector centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
-            northWest = new QuadTree(new AABB(centre, size));
+            northWest = new QuadTree<T>(new AABB(centre, size));
 
             centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
-            northEast = new QuadTree(new AABB(centre, size));
+            northEast = new QuadTree<T>(new AABB(centre, size));
             
             centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
-            southWest = new QuadTree(new AABB(centre, size));
+            southWest = new QuadTree<T>(new AABB(centre, size));
             
             centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
-            southEast = new QuadTree(new AABB(centre, size));
+            southEast = new QuadTree<T>(new AABB(centre, size));
         }
 
-        public List<Vector> QueryRange(AABB range) {
-            List<Vector> pointsInRange = new List<Vector>();
+        public List<T> QueryRange(AABB range) {
+            List<T> pointsInRange = new List<T>();
 
             if (!Boundary.IntersectsAABB(range)) {
                 return pointsInRange;
             }
 
-            for (int i = 0; i < points.Length; i++) {
-                if (range.ContainsPoint(points[i])) {
-                    pointsInRange.Add(points[i]);
-                }
+            foreach (T point in points) {
+                if (range.ContainsPoint(point.position)) {
+                    pointsInRange.Add(point);
+                }         
             }
 
             if (northWest == null) {
@@ -107,5 +108,13 @@ namespace ComputingProject.Collision
 
             return pointsInRange;
         }
+
+        public void ClearQuad() {
+            northEast = null;
+            northWest = null;
+            southEast = null;
+            southWest = null;
+        }
     }
+
 }

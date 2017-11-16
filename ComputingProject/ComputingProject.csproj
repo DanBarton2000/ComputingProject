@@ -50,6 +50,7 @@
     <Compile Include="ColliderType.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DebugTools.cs" />
+    <Compile Include="IQuadtreeObject.cs" />
     <Compile Include="Load.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="PolygonCollider.cs" />
