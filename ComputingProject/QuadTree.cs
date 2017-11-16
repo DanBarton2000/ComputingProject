@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ComputingProject.Collision
 {
-    class QuadTree
+    public class QuadTree
     {
         readonly int maxNodeCount = 4;
         
-        public AABB Boundary { get; }
+        public AABB Boundary { get; private set; }
 
         Vector[] points;
 
@@ -23,13 +23,12 @@ namespace ComputingProject.Collision
             points = new Vector[maxNodeCount];
         }
 
-        QuadTree(AABB boundary)
-        {
+        public QuadTree(AABB boundary) {
             points = new Vector[maxNodeCount];
             Boundary = boundary;
         }
 
-        bool Insert(Vector point) {
+        public bool Insert(Vector point) {
             if (!Boundary.ContainsPoint(point)) {
                 return false;
             }
@@ -60,7 +59,7 @@ namespace ComputingProject.Collision
             return false;
         }
 
-        void Delete(Vector point) {
+        public void Delete(Vector point) {
             for (int i = 0; i < points.Length; i++) {
                 if (points[i] == point) {
                     points[i] = null;
@@ -68,7 +67,7 @@ namespace ComputingProject.Collision
             }
         }
 
-        void SubDivide() {
+        public void SubDivide() {
             Vector size = Boundary.halfDimension / 2;
 
             Vector centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
@@ -84,7 +83,7 @@ namespace ComputingProject.Collision
             southEast = new QuadTree(new AABB(centre, size));
         }
 
-        List<Vector> QueryRange(AABB range) {
+        public List<Vector> QueryRange(AABB range) {
             List<Vector> pointsInRange = new List<Vector>();
 
             if (!Boundary.IntersectsAABB(range)) {

@@ -49,9 +49,11 @@ namespace ComputingProject
             this.colour = colour;
             collider = col;
 
-            if (collider.colliderType == ColliderType.Circle) {
-                CircleCollider cc = (CircleCollider)collider;
-                cc.centre.Set(position.x, position.y);
+            if (collider != null) {
+                if (collider.colliderType == ColliderType.Circle) {
+                    CircleCollider cc = (CircleCollider)collider;
+                    cc.centre.Set(position.x, position.y);
+                }
             }
 
             ObjectManager.AddObject(this);

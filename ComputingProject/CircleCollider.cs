@@ -11,7 +11,7 @@ namespace ComputingProject.Collision
         public Vector centre { get; private set; }
         public double radius { get; private set; }
 
-        CircleCollider(Vector centre, double radius) {
+        public CircleCollider(Vector centre, double radius) {
             colliderType = ColliderType.Circle;
             this.centre = centre;
             this.radius = radius;
