@@ -9,7 +9,27 @@ namespace ComputingProject.Collision
     public class SAT
     {
 
-        public bool IsCollidingCircles(CircleCollider col1, CircleCollider col2) {
+        public static bool IsColliding(Collider2D col1, Collider2D col2) {
+            // Check for circle collision
+            if (col1.colliderType == ColliderType.Circle && col2.colliderType == ColliderType.Circle) {
+                return IsCollidingCircles((CircleCollider)col1, (CircleCollider)col2);
+            }
+
+            // Check for polygon circle collision
+            else if (col1.colliderType == ColliderType.Polygon && col2.colliderType == ColliderType.Circle) {
+                return IsCollidingPolygonCircle((PolygonCollider)col1, (CircleCollider)col2);
+            }
+
+            // Check for polygon collision
+            else if (col1.colliderType == ColliderType.Polygon && col2.colliderType == ColliderType.Polygon) {
+                return IsCollidingPolygons((PolygonCollider)col1, (PolygonCollider)col2);
+            }
+
+            // Should never reach here
+            return false;
+        }
+
+        public static bool IsCollidingCircles(CircleCollider col1, CircleCollider col2) {
             Vector v = col1.centre - col2.centre;
             if (v.Magnitude < col1.radius + col2.radius) {
                 return true;
@@ -17,7 +37,7 @@ namespace ComputingProject.Collision
             return false;
         }
 
-        public bool IsCollidingPolygonCircle(PolygonCollider col1, CircleCollider col2) {
+        public static bool IsCollidingPolygonCircle(PolygonCollider col1, CircleCollider col2) {
             List<Vector> edges = new List<Vector>();
             edges = CalculateEdges(col1.Vertices);
             for (int i = 0; i < edges.Count; i++) {
@@ -28,7 +48,7 @@ namespace ComputingProject.Collision
             return false;
         }
 
-        public bool IsCollidingPolygons(PolygonCollider col1, PolygonCollider col2) {
+        public static bool IsCollidingPolygons(PolygonCollider col1, PolygonCollider col2) {
             List<Vector> edges = CalculateEdges(col1.Vertices);
             edges.AddRange(CalculateEdges(col2.Vertices));
 
@@ -48,7 +68,7 @@ namespace ComputingProject.Collision
             return true;
         }
 
-        List<Vector> CalculateEdges(List<Vector> vertices) {
+        static List<Vector> CalculateEdges(List<Vector> vertices) {
             List<Vector> edges = new List<Vector>();
             int length = vertices.Count;
 
@@ -59,11 +79,11 @@ namespace ComputingProject.Collision
             return edges;
         }
 
-        Vector CalculateNormal(Vector point) {
+        static Vector CalculateNormal(Vector point) {
             return new Vector(-point.y, point.x);
         }
 
-        bool IsSeparatingAxis(Vector normal, PolygonCollider col1, PolygonCollider col2) {
+        static bool IsSeparatingAxis(Vector normal, PolygonCollider col1, PolygonCollider col2) {
             double min1 = double.PositiveInfinity;
             double max1 = double.NegativeInfinity;
             double min2 = double.PositiveInfinity;

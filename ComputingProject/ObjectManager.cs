@@ -37,7 +37,7 @@ namespace ComputingProject
             return AllObjects.Where(x => x.GetType() == typeof(K)).ToList();
         }
 
-        public static void Update(double timeStep, double scale, double velocityRebound = -1) {
+        public static void Update(double timeStep, double scale, QuadTree<IQuadtreeObject> tree, double velocityRebound = -1) {
 
             if (TimeController.isPaused) {
                 return;
@@ -88,6 +88,8 @@ namespace ComputingProject
                     }
                 }
 
+                UpdateCollision(tree);
+
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
                 if (co.position.x < 0 || co.position.x > screenBounds.x) {
@@ -109,6 +111,34 @@ namespace ComputingProject
 
         public static void SetScreenBounds(Vector bounds) {
             screenBounds = bounds;
+        }
+
+        public static void UpdateCollision(QuadTree<IQuadtreeObject> tree) {
+
+            Vector centre = new Vector();
+            Vector size = new Vector();
+
+            AABB range = new AABB(centre, size);
+
+            List<IQuadtreeObject> objects =  tree.QueryRange(range);
+
+            bool hasCollided = false;
+
+            foreach (IQuadtreeObject obj in objects) {
+                foreach (IQuadtreeObject quadObj in objects) {
+                    if (obj != quadObj) {
+                        hasCollided = SAT.IsColliding(obj.collider, quadObj.collider);
+                    }
+                }
+            }
+
+            // Once every collision has been calculated, the quad is cleared.
+            tree.ClearQuad();
+
+            // Then insert the objects back into the quadtree.
+            foreach (IQuadtreeObject obj in AllObjects) {
+                tree.Insert(obj);
+            }
         }
         #endregion
     }
