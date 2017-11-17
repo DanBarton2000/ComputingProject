@@ -17,7 +17,7 @@ namespace ComputingProject
 
             FileStream stream = File.Create(path);
 
-            writer.Serialize(stream, ObjectManager.AllObjects);
+            writer.Serialize(stream, ObjectManager<IQuadtreeObject>.AllObjects);
 
             stream.Close();
         }

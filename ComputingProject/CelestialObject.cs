@@ -15,17 +15,18 @@ namespace ComputingProject
         private double mass;
         private double totalVelocity;
 
-        public Brush colour;
+        public Brush colour { get; set; }
 
         public double Mass { get { return mass; } set { if (value > 0) { mass = value; } } }
         public double TotalVelocity { get { return totalVelocity; } set {
                 double radians = Bearing * Constants.DegreesToRadians;
-                velocity.x = value * Math.Cos(radians);
-                velocity.y = value * Math.Sin(radians);
+                double x = value * Math.Cos(radians);
+                double y = value * Math.Sin(radians);
+                velocity = new Velocity(x, y);
                 totalVelocity = value;
             }
         } // Split into X and Y 
-        public Velocity velocity;
+        public Velocity velocity { get; set; }
 
         public double Bearing { get; set; } // The bearing in degrees
 
@@ -34,6 +35,9 @@ namespace ComputingProject
         public string Name { get { return name; } set { if (value != null || value != "") name = value; } }
 
         public Collider2D collider { get; set; }
+
+        // Radius of the graphic and the collider (if it is a circle collider)
+        public double radius { get { return radius; } set { if (value > 0 && value < 100) { radius = value; } } } 
         #endregion
 
         #region Methods
@@ -56,23 +60,23 @@ namespace ComputingProject
                 }
             }
 
-            ObjectManager.AddObject(this);
+            ObjectManager<IQuadtreeObject>.AddObject(this);
         }
 
-        public double[] Attraction(CelestialObject co) {
+        public double[] Attraction(IQuadtreeObject co) {
             double[] forces = new double[2];
-            double distance = Vector.DistanceSqr(this.position, co.position);
+            double distance = Vector.DistanceSqr(position, co.position);
 
             if (distance == 0) {
-                Console.WriteLine("Objects {0} {1} are on top of each other!", this.Name, co.Name);
+                Console.WriteLine("Objects {0} {1} are on top of each other!", Name, co.Name);
                 return null;
             }
 
             // Using the formula F = GMm/d^2
-            double force = (Constants.Gravitational * this.Mass * co.Mass) / distance;
+            double force = (Constants.Gravitational * Mass * co.Mass) / distance;
 
-            double differenceX = Vector.DifferenceX(this.position, co.position);
-            double differenceY = Vector.DifferenceY(this.position, co.position);
+            double differenceX = Vector.DifferenceX(position, co.position);
+            double differenceY = Vector.DifferenceY(position, co.position);
 
             double theta = Math.Atan2(differenceY, differenceX);
 
@@ -110,13 +114,14 @@ namespace ComputingProject
 
         #endregion
 
-        public struct Velocity{
-            public double x;
-            public double y;
-            Velocity(double x, double y){
-                this.x = x;
-                this.y = y;
-            }
+    }
+
+    public struct Velocity {
+        public double x;
+        public double y;
+        public Velocity(double x, double y) {
+            this.x = x;
+            this.y = y;
         }
     }
 }

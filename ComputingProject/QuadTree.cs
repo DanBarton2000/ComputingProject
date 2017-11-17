@@ -110,6 +110,10 @@ namespace ComputingProject.Collision
         }
 
         public void ClearQuad() {
+            if (northWest != null) {
+                ClearQuad();
+            }
+
             northEast = null;
             northWest = null;
             southEast = null;

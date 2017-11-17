@@ -7,13 +7,14 @@ using ComputingProject.Collision;
 
 namespace ComputingProject
 {
-    public class ObjectManager
+    public class ObjectManager<T> where T : IQuadtreeObject 
     {
         #region Variables
 
+        private static Vector screenBounds;
         private static double fx, fy;
 
-        public static List<CelestialObject> AllObjects { get; private set; } = new List<CelestialObject>();
+        public static List<T> AllObjects { get; private set; } = new List<T>();
         #endregion
 
         #region Static Methods
@@ -22,8 +23,8 @@ namespace ComputingProject
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The object with the name</returns>
-        public static CelestialObject FindObjectWithName(string name) {
-            CelestialObject co = AllObjects.First(s => s.Name == name);
+        public static T FindObjectWithName(string name) {
+            T co = AllObjects.First(s => s.Name == name);
             return co;
         }
 
@@ -32,22 +33,22 @@ namespace ComputingProject
         /// </summary>
         /// <param name="type"></param>
         /// <returns>List of objects of type "type"</returns>
-        public static List<CelestialObject> FindObjectsOfType(Type type) {
-            return AllObjects.Where(x => x.GetType() == type).ToList();
+        public static List<T> FindObjectsOfType<K>() where K : IQuadtreeObject {
+            return AllObjects.Where(x => x.GetType() == typeof(K)).ToList();
         }
 
-        public static void Update(double timeStep, double scale) {
+        public static void Update(double timeStep, double scale, double velocityRebound = -1) {
 
             if (TimeController.isPaused) {
                 return;
             }
 
-            Dictionary<CelestialObject, double[]> forces = new Dictionary<CelestialObject, double[]>();
-            foreach (CelestialObject co in AllObjects) {
+            Dictionary<T, double[]> forces = new Dictionary<T, double[]>();
+            foreach (T co in AllObjects) {
                 fx = 0;
                 fy = 0;
-                foreach (CelestialObject cobj in AllObjects) {
-                    if (co != cobj) {
+                foreach (T cobj in AllObjects) {
+                    if (!EqualityComparer<T>.Default.Equals(co, cobj)) {
                         double[] force = co.Attraction(cobj);
                         fx += force[0];
                         fy += force[1];
@@ -57,11 +58,13 @@ namespace ComputingProject
                 forces.Add(co, totalForces);
             }
 
-            foreach (CelestialObject co in AllObjects) {
+            foreach (T co in AllObjects) {
                 double[] f = forces[co];
                 double massTimeStep = co.Mass * timeStep;
-                co.velocity.x += f[0] / massTimeStep;
-                co.velocity.y += f[1] / massTimeStep;
+                double x = f[0] / massTimeStep;
+                double y = f[1] / massTimeStep;
+
+                co.velocity = new Velocity(co.velocity.x + x, co.velocity.y + y);
 
                 double addPositionX = co.velocity.x * timeStep * scale;
                 double addPositionY = co.velocity.y * timeStep * scale;
@@ -84,14 +87,28 @@ namespace ComputingProject
                         }
                     }
                 }
+
+                // Check if the object is outside the screen. 
+                // If it is, invert the velocity.
+                if (co.position.x < 0 || co.position.x > screenBounds.x) {
+                    co.velocity = new Velocity(co.velocity.x * velocityRebound, co.velocity.y);
+                }
+                else if (co.position.y < 0 || co.position.y > screenBounds.y) {
+                    co.velocity = new Velocity(co.velocity.x, co.velocity.y * velocityRebound);
+                }
+
                 if (DebugTools.DebugMode) {
                     Console.WriteLine("OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
                 }
             }
         }
 
-        public static void AddObject(CelestialObject co) {
+        public static void AddObject(T co) {
             AllObjects.Add(co);
+        }
+
+        public static void SetScreenBounds(Vector bounds) {
+            screenBounds = bounds;
         }
         #endregion
     }

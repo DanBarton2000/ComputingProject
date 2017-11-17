@@ -12,12 +12,12 @@ namespace ComputingProject {
 
         public static bool isPaused { get; private set; } = false;
 
-        TimeController(double timeStep) {
+        public TimeController(double timeStep) {
             defaultTimeStep = timeStep;
             currentTimeStep = timeStep;
         }
 
-        void Pause() {
+        public void Pause() {
             if (isPaused)
                 return;
 
@@ -26,7 +26,7 @@ namespace ComputingProject {
             currentTimeStep = 0;
         }
 
-        void UnPause() {
+        public void UnPause() {
             if (!isPaused)
                 return;
 
@@ -34,11 +34,11 @@ namespace ComputingProject {
             currentTimeStep = pauseTimeStep;
         }
 
-        void SpeedUp(double scalar) {
+        public void SpeedUp(double scalar) {
             currentTimeStep *= scalar;
         }
 
-        void DefaultSpeed() {
+        public void DefaultSpeed() {
             currentTimeStep = defaultTimeStep;
         }
 
