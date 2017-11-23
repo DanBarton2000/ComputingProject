@@ -60,7 +60,7 @@ namespace ComputingProject
                 }
             }
 
-            ObjectManager<IQuadtreeObject>.AddObject(this);
+            ObjectManager.AddObject(this);
         }
 
         public double[] Attraction(IQuadtreeObject co) {

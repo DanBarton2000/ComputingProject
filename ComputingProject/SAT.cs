@@ -25,7 +25,7 @@ namespace ComputingProject.Collision
                 return IsCollidingPolygons((PolygonCollider)col1, (PolygonCollider)col2);
             }
 
-            // Should never reach here
+            // Should never reach here unless one of the colliders is null
             return false;
         }
 
@@ -79,7 +79,7 @@ namespace ComputingProject.Collision
             return edges;
         }
 
-        static Vector CalculateNormal(Vector point) {
+        public static Vector CalculateNormal(Vector point) {
             return new Vector(-point.y, point.x);
         }
 

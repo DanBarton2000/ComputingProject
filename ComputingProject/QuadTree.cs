@@ -92,9 +92,11 @@ namespace ComputingProject.Collision
             }
 
             foreach (T point in points) {
-                if (range.ContainsPoint(point.position)) {
-                    pointsInRange.Add(point);
-                }         
+                if (!EqualityComparer<T>.Default.Equals(point, default(T))) {
+                    if (range.ContainsPoint(point.position)) {
+                        pointsInRange.Add(point);
+                    }
+                }
             }
 
             if (northWest == null) {
@@ -110,8 +112,9 @@ namespace ComputingProject.Collision
         }
 
         public void ClearQuad() {
+
             if (northWest != null) {
-                ClearQuad();
+                northWest.ClearQuad();
             }
 
             northEast = null;

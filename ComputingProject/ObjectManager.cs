@@ -7,14 +7,14 @@ using ComputingProject.Collision;
 
 namespace ComputingProject
 {
-    public class ObjectManager<T> where T : IQuadtreeObject 
+    public class ObjectManager
     {
         #region Variables
 
         private static Vector screenBounds;
         private static double fx, fy;
 
-        public static List<T> AllObjects { get; private set; } = new List<T>();
+        public static List<IQuadtreeObject> AllObjects { get; private set; } = new List<IQuadtreeObject>();
         #endregion
 
         #region Static Methods
@@ -23,8 +23,8 @@ namespace ComputingProject
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The object with the name</returns>
-        public static T FindObjectWithName(string name) {
-            T co = AllObjects.First(s => s.Name == name);
+        public static IQuadtreeObject FindObjectWithName(string name) {
+            IQuadtreeObject co = AllObjects.First(s => s.Name == name);
             return co;
         }
 
@@ -33,7 +33,7 @@ namespace ComputingProject
         /// </summary>
         /// <param name="type"></param>
         /// <returns>List of objects of type "type"</returns>
-        public static List<T> FindObjectsOfType<K>() where K : IQuadtreeObject {
+        public static List<IQuadtreeObject> FindObjectsOfType<K>() where K : IQuadtreeObject {
             return AllObjects.Where(x => x.GetType() == typeof(K)).ToList();
         }
 
@@ -43,12 +43,12 @@ namespace ComputingProject
                 return;
             }
 
-            Dictionary<T, double[]> forces = new Dictionary<T, double[]>();
-            foreach (T co in AllObjects) {
+            Dictionary<IQuadtreeObject, double[]> forces = new Dictionary<IQuadtreeObject, double[]>();
+            foreach (IQuadtreeObject co in AllObjects) {
                 fx = 0;
                 fy = 0;
-                foreach (T cobj in AllObjects) {
-                    if (!EqualityComparer<T>.Default.Equals(co, cobj)) {
+                foreach (IQuadtreeObject cobj in AllObjects) {
+                    if (!EqualityComparer<IQuadtreeObject>.Default.Equals(co, cobj)) {
                         double[] force = co.Attraction(cobj);
                         fx += force[0];
                         fy += force[1];
@@ -58,7 +58,7 @@ namespace ComputingProject
                 forces.Add(co, totalForces);
             }
 
-            foreach (T co in AllObjects) {
+            foreach (IQuadtreeObject co in AllObjects) {
                 double[] f = forces[co];
                 double massTimeStep = co.Mass * timeStep;
                 double x = f[0] / massTimeStep;
@@ -88,7 +88,7 @@ namespace ComputingProject
                     }
                 }
 
-                UpdateCollision(tree);
+                //UpdateCollision(tree);
 
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
@@ -105,7 +105,7 @@ namespace ComputingProject
             }
         }
 
-        public static void AddObject(T co) {
+        public static void AddObject(IQuadtreeObject co) {
             AllObjects.Add(co);
         }
 
@@ -115,11 +115,21 @@ namespace ComputingProject
 
         public static void UpdateCollision(QuadTree<IQuadtreeObject> tree) {
 
-            Vector centre = new Vector();
-            Vector size = new Vector();
+            // Insert objects into the tree
+            foreach (IQuadtreeObject obj in AllObjects) {
+                tree.Insert(obj);
+            }
+
+            // The centre of the query range
+            // Currently will be just the size of the screen
+            Vector centre = new Vector(tree.Boundary.centre.x, tree.Boundary.centre.y);
+
+            // The half size of the query range
+            Vector size = centre;
 
             AABB range = new AABB(centre, size);
 
+            // Getting the objects that are 
             List<IQuadtreeObject> objects =  tree.QueryRange(range);
 
             bool hasCollided = false;
@@ -128,17 +138,29 @@ namespace ComputingProject
                 foreach (IQuadtreeObject quadObj in objects) {
                     if (obj != quadObj) {
                         hasCollided = SAT.IsColliding(obj.collider, quadObj.collider);
+                        if (hasCollided) {
+                            // Update the velocity
+                      
+                            /*newVelX1 = (firstBall.speed.x * (firstBall.mass – secondBall.mass) +(2 * secondBall.mass * secondBall.speed.x)) / (firstBall.mass + secondBall.mass);
+                            newVelY1 = (firstBall.speed.y * (firstBall.mass – secondBall.mass) +(2 * secondBall.mass * secondBall.speed.y)) / (firstBall.mass + secondBall.mass);
+                            newVelX2 = (secondBall.speed.x * (secondBall.mass – firstBall.mass) +(2 * firstBall.mass * firstBall.speed.x)) / (firstBall.mass + secondBall.mass);
+                            newVelY2 = (secondBall.speed.y * (secondBall.mass – firstBall.mass) +(2 * firstBall.mass * firstBall.speed.y)) / (firstBall.mass + secondBall.mass);
+                            */
+
+                            Velocity vel1 = new Velocity();
+                            vel1.x = obj.velocity.x;
+                            obj.velocity = new Velocity(obj.velocity.x + vel1.x, obj.velocity.y + vel1.y);
+
+                            Velocity vel2 = new Velocity();
+                            vel2.x = quadObj.velocity.x;
+                            quadObj.velocity = new Velocity(quadObj.velocity.x + vel2.x, quadObj.velocity.y + vel2.y);                         
+                        } 
                     }
                 }
             }
 
             // Once every collision has been calculated, the quad is cleared.
             tree.ClearQuad();
-
-            // Then insert the objects back into the quadtree.
-            foreach (IQuadtreeObject obj in AllObjects) {
-                tree.Insert(obj);
-            }
         }
         #endregion
     }
