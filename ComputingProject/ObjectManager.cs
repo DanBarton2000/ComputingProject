@@ -75,11 +75,13 @@ namespace ComputingProject
                     UpdateCollision(tree);
                 }
 
+
+                // If the velocity becomes too high, set it to a lower value
                 if (co.velocity.x > 500) {
-                    co.velocity.x -= 300;
+                    co.velocity.x = 300;
                 }
                 else if (co.velocity.y > 500) {
-                    co.velocity.y -= 300;
+                    co.velocity.y = 300;
                 }
 
                 double addPositionX = co.velocity.x * timeStep * scale;

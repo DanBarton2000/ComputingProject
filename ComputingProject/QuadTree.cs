@@ -111,6 +111,9 @@ namespace ComputingProject.Collision
             return pointsInRange;
         }
 
+        /// <summary>
+        /// Clears the Quadtree by recursion
+        /// </summary>
         public void ClearQuad() {
 
             if (northWest != null) {
