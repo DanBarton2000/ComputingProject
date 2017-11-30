@@ -168,23 +168,27 @@ namespace ComputingProject
                             // Combined masses
                             double masses = quadObj.Mass + obj.Mass;
 
-                            // Work out the velocity of object 1
+                           
                             Vector vel1 = new Vector();
-                            vel1.x = (obj.velocity.x * obj.Mass + quadObj.velocity.x * quadObj.Mass) / masses;
-                            vel1.y = (obj.velocity.y * obj.Mass + quadObj.velocity.y * quadObj.Mass) / masses;
+                            obj.position.x = (obj.position.x * obj.Mass + quadObj.position.x * quadObj.Mass) / masses;
+                            obj.position.y = (obj.position.y * obj.Mass + quadObj.position.y * quadObj.Mass) / masses;
 
                             // Then set the velocity to the new velocity
 
-                            Vector vel1Norm = obj.velocity.Normalise();
+                            obj.velocity *= obj.Mass / masses;
 
-                            obj.velocity = new Vector(obj.velocity.x * vel1Norm.x, quadObj.velocity.y * vel1Norm.y);
+                            quadObj.velocity *= quadObj.Mass / masses;
+
+                            //Vector vel1Norm = obj.velocity.Normalise();
+
+                            //obj.velocity = new Vector(obj.velocity.x * vel1Norm.x, quadObj.velocity.y * vel1Norm.y);
 
                             // Work out the velocity of object 2
                             Vector vel2 = new Vector();
-                            vel2.x = -(obj.velocity.x * obj.Mass + quadObj.velocity.x * quadObj.Mass) / masses;
-                            vel2.y = -(obj.velocity.y * obj.Mass + quadObj.velocity.y * quadObj.Mass) / masses;
+                            //vel2.x = -(obj.velocity.x * obj.Mass + quadObj.velocity.x * quadObj.Mass) / masses;
+                            //vel2.y = -(obj.velocity.y * obj.Mass + quadObj.velocity.y * quadObj.Mass) / masses;
 
-                            quadObj.velocity = vel2;
+                            //quadObj.velocity = vel2;
 
                             obj.collider.isColliding = true;
                             quadObj.collider.isColliding = true;
