@@ -71,6 +71,17 @@ namespace ComputingProject
 
                 co.velocity = new Vector(co.velocity.x + x, co.velocity.y + y);
 
+                if (DebugTools.UseCollision) {
+                    UpdateCollision(tree);
+                }
+
+                if (co.velocity.x > 500) {
+                    co.velocity.x -= 300;
+                }
+                else if (co.velocity.y > 500) {
+                    co.velocity.y -= 300;
+                }
+
                 double addPositionX = co.velocity.x * timeStep * scale;
                 double addPositionY = co.velocity.y * timeStep * scale;
 
@@ -91,10 +102,6 @@ namespace ComputingProject
                             vert.y += addPositionY;
                         }
                     }
-                }
-
-                if (DebugTools.UseCollision) {
-                    UpdateCollision(tree);
                 }
 
                 // Check if the object is outside the screen. 
@@ -152,39 +159,32 @@ namespace ComputingProject
 
                             // Update the velocity
 
-                            // Formula to work velocity after two objects collide.
-                            // https://gamedevelopment.tutsplus.com/tutorials/when-worlds-collide-simulating-circle-circle-collisions--gamedev-769
-
-                            /*newVelX1 = (firstBall.speed.x * (firstBall.mass – secondBall.mass) +(2 * secondBall.mass * secondBall.speed.x)) / (firstBall.mass + secondBall.mass);
-                            newVelY1 = (firstBall.speed.y * (firstBall.mass – secondBall.mass) +(2 * secondBall.mass * secondBall.speed.y)) / (firstBall.mass + secondBall.mass);
-                            newVelX2 = (secondBall.speed.x * (secondBall.mass – firstBall.mass) +(2 * firstBall.mass * firstBall.speed.x)) / (firstBall.mass + secondBall.mass);
-                            newVelY2 = (secondBall.speed.y * (secondBall.mass – firstBall.mass) +(2 * firstBall.mass * firstBall.speed.y)) / (firstBall.mass + secondBall.mass);
-                            */
+                            /*
+                            self.x = (self.x * self.mass + other.x * other.mass) / total_mass
+                            self.y = (self.y * self.mass + other.y * other.mass) / total_mass
+                            self.speed = self.speed * self.mass / total_mass
+                            other.speed = other.speed * other.mass / total_mass */
 
                             // Combined masses
                             double masses = quadObj.Mass + obj.Mass;
 
                             // Work out the velocity of object 1
                             Vector vel1 = new Vector();
-                            vel1.x = (obj.velocity.x * (obj.Mass - quadObj.Mass) + (2 * quadObj.Mass * quadObj.velocity.x)) / masses;
-                            vel1.y = (obj.velocity.y * (obj.Mass - quadObj.Mass) + (2 * quadObj.Mass * quadObj.velocity.y)) / masses;
-                            //obj.velocity = new Velocity(obj.velocity.x + vel1.x, obj.velocity.y + vel1.y);
+                            vel1.x = (obj.velocity.x * obj.Mass + quadObj.velocity.x * quadObj.Mass) / masses;
+                            vel1.y = (obj.velocity.y * obj.Mass + quadObj.velocity.y * quadObj.Mass) / masses;
 
                             // Then set the velocity to the new velocity
 
-                            Console.WriteLine("Velocity 1: " + vel1.ToString());
+                            Vector vel1Norm = obj.velocity.Normalise();
 
-                            obj.velocity += vel1;
+                            obj.velocity = new Vector(obj.velocity.x * vel1Norm.x, quadObj.velocity.y * vel1Norm.y);
 
                             // Work out the velocity of object 2
                             Vector vel2 = new Vector();
-                            vel2.x = (quadObj.velocity.x * (quadObj.Mass - obj.Mass) + (2 * obj.Mass * obj.velocity.x)) / masses;
-                            vel2.y = (quadObj.velocity.y * (quadObj.Mass - obj.Mass) + (2 * obj.Mass * obj.velocity.y)) / masses;
-                            //quadObj.velocity = new Velocity(quadObj.velocity.x + vel2.x, quadObj.velocity.y + vel2.y);
+                            vel2.x = -(obj.velocity.x * obj.Mass + quadObj.velocity.x * quadObj.Mass) / masses;
+                            vel2.y = -(obj.velocity.y * obj.Mass + quadObj.velocity.y * quadObj.Mass) / masses;
 
-                            Console.WriteLine("Velocity 2: " + vel2.ToString());
-
-                            quadObj.velocity += vel2;
+                            quadObj.velocity = vel2;
 
                             obj.collider.isColliding = true;
                             quadObj.collider.isColliding = true;
