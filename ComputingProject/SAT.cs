@@ -11,18 +11,20 @@ namespace ComputingProject.Collision
 
         public static bool IsColliding(Collider2D col1, Collider2D col2) {
             // Check for circle collision
-            if (col1.colliderType == ColliderType.Circle && col2.colliderType == ColliderType.Circle) {
-                return IsCollidingCircles((CircleCollider)col1, (CircleCollider)col2);
-            }
+            if (col1 != null && col2 != null) {
+                if (col1.colliderType == ColliderType.Circle && col2.colliderType == ColliderType.Circle) {
+                    return IsCollidingCircles((CircleCollider)col1, (CircleCollider)col2);
+                }
 
-            // Check for polygon circle collision
-            else if (col1.colliderType == ColliderType.Polygon && col2.colliderType == ColliderType.Circle) {
-                return IsCollidingPolygonCircle((PolygonCollider)col1, (CircleCollider)col2);
-            }
+                // Check for polygon circle collision
+                else if (col1.colliderType == ColliderType.Polygon && col2.colliderType == ColliderType.Circle) {
+                    return IsCollidingPolygonCircle((PolygonCollider)col1, (CircleCollider)col2);
+                }
 
-            // Check for polygon collision
-            else if (col1.colliderType == ColliderType.Polygon && col2.colliderType == ColliderType.Polygon) {
-                return IsCollidingPolygons((PolygonCollider)col1, (PolygonCollider)col2);
+                // Check for polygon collision
+                else if (col1.colliderType == ColliderType.Polygon && col2.colliderType == ColliderType.Polygon) {
+                    return IsCollidingPolygons((PolygonCollider)col1, (PolygonCollider)col2);
+                }
             }
 
             // Should never reach here unless one of the colliders is null

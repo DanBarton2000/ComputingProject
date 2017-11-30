@@ -11,7 +11,7 @@ namespace ComputingProject {
         Collider2D collider { get; set; }
         Vector position { get; set; }
         string Name { get; set; }
-        Velocity velocity { get; set; }
+        Vector velocity { get; set; }
         double Mass { get; set; }
         Brush colour { get; set; }
 

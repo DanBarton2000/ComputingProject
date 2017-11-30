@@ -69,7 +69,7 @@ namespace ComputingProject
                 double x = f[0] / massTimeStep;
                 double y = f[1] / massTimeStep;
 
-                co.velocity = new Velocity(co.velocity.x + x, co.velocity.y + y);
+                co.velocity = new Vector(co.velocity.x + x, co.velocity.y + y);
 
                 double addPositionX = co.velocity.x * timeStep * scale;
                 double addPositionY = co.velocity.y * timeStep * scale;
@@ -100,10 +100,10 @@ namespace ComputingProject
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
                 if (co.position.x < 0 || co.position.x > screenBounds.x) {
-                    co.velocity = new Velocity(co.velocity.x * velocityRebound, co.velocity.y);
+                    co.velocity = new Vector(co.velocity.x * velocityRebound, co.velocity.y);
                 }
                 else if (co.position.y < 0 || co.position.y > screenBounds.y) {
-                    co.velocity = new Velocity(co.velocity.x, co.velocity.y * velocityRebound);
+                    co.velocity = new Vector(co.velocity.x, co.velocity.y * velocityRebound);
                 }
 
                 if (DebugTools.DebugMode) {
@@ -145,7 +145,7 @@ namespace ComputingProject
                 foreach (IQuadtreeObject quadObj in objects) {
                     if (obj != quadObj) {
                         hasCollided = SAT.IsColliding(obj.collider, quadObj.collider);
-                        if (hasCollided) {
+                        if (hasCollided && !obj.collider.isColliding && !quadObj.collider.isColliding) {
 
                             obj.colour = System.Drawing.Brushes.Black;
                             quadObj.colour = System.Drawing.Brushes.Black;
@@ -163,29 +163,41 @@ namespace ComputingProject
 
                             // Combined masses
                             double masses = quadObj.Mass + obj.Mass;
-                            
+
                             // Work out the velocity of object 1
-                            Velocity vel1 = new Velocity();
+                            Vector vel1 = new Vector();
                             vel1.x = (obj.velocity.x * (obj.Mass - quadObj.Mass) + (2 * quadObj.Mass * quadObj.velocity.x)) / masses;
                             vel1.y = (obj.velocity.y * (obj.Mass - quadObj.Mass) + (2 * quadObj.Mass * quadObj.velocity.y)) / masses;
                             //obj.velocity = new Velocity(obj.velocity.x + vel1.x, obj.velocity.y + vel1.y);
 
                             // Then set the velocity to the new velocity
-                            obj.velocity = vel1;
+
+                            Console.WriteLine("Velocity 1: " + vel1.ToString());
+
+                            obj.velocity += vel1;
 
                             // Work out the velocity of object 2
-                            Velocity vel2 = new Velocity();
+                            Vector vel2 = new Vector();
                             vel2.x = (quadObj.velocity.x * (quadObj.Mass - obj.Mass) + (2 * obj.Mass * obj.velocity.x)) / masses;
                             vel2.y = (quadObj.velocity.y * (quadObj.Mass - obj.Mass) + (2 * obj.Mass * obj.velocity.y)) / masses;
                             //quadObj.velocity = new Velocity(quadObj.velocity.x + vel2.x, quadObj.velocity.y + vel2.y);
 
-                            quadObj.velocity = vel2;
+                            Console.WriteLine("Velocity 2: " + vel2.ToString());
+
+                            quadObj.velocity += vel2;
+
+                            obj.collider.isColliding = true;
+                            quadObj.collider.isColliding = true;
 
                             if (DebugTools.DebugMode) {
                                 Console.WriteLine("Vel1: " + vel1.ToString());
                                 Console.WriteLine("Vel2: " + vel2.ToString());
                             }
-                        } 
+                        }
+                        else {
+                            obj.collider.isColliding = false;
+                            quadObj.collider.isColliding = false;
+                        }
                     }
                 }
             }

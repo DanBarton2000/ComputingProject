@@ -22,7 +22,7 @@ namespace ComputingProject
                 double radians = Bearing * Constants.DegreesToRadians;
                 double x = value * Math.Cos(radians);
                 double y = value * Math.Sin(radians);
-                velocity = new Velocity(x, y);
+                velocity = new Vector(x, y);
 
                 Console.WriteLine("Degrees to radians: " + Constants.DegreesToRadians);
                 Console.WriteLine("Bearing: " + Bearing);
@@ -32,7 +32,7 @@ namespace ComputingProject
                 totalVelocity = value;
             }
         } // Split into X and Y 
-        public Velocity velocity { get; set; }
+        public Vector velocity { get; set; }
 
         public double Bearing { get; set; } // The bearing in degrees
 
@@ -53,8 +53,8 @@ namespace ComputingProject
         public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
-            TotalVelocity = velocity;
             Bearing = bearing;
+            TotalVelocity = velocity;
             this.position = position;
             this.colour = colour;
             collider = col;
@@ -120,18 +120,5 @@ namespace ComputingProject
 
         #endregion
 
-    }
-
-    public struct Velocity {
-        public double x;
-        public double y;
-        public Velocity(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public override string ToString() {
-            return "X: " + x + " Y: " + y;
-        }
     }
 }
