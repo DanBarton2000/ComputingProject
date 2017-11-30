@@ -33,15 +33,17 @@ namespace ComputingProject
         /// </summary>
         /// <param name="type"></param>
         /// <returns>List of objects of type "type"</returns>
-        public static List<IQuadtreeObject> FindObjectsOfType<K>() where K : IQuadtreeObject {
-            return AllObjects.Where(x => x.GetType() == typeof(K)).ToList();
+        public static List<IQuadtreeObject> FindObjectsOfType<T>() where T : IQuadtreeObject {
+            return AllObjects.Where(x => x.GetType() == typeof(T)).ToList();
         }
 
         public static void Update(double timeStep, double scale, QuadTree<IQuadtreeObject> tree, double velocityRebound = -1) {
 
+            // Checking to make sure that there is a Quadtree available
             if (tree == null)
                 throw new Exception("Tree is null!");
 
+            // If the simulation is paused, don't update
             if (TimeController.isPaused) {
                 return;
             }
@@ -91,7 +93,9 @@ namespace ComputingProject
                     }
                 }
 
-                UpdateCollision(tree);
+                if (DebugTools.UseCollision) {
+                    UpdateCollision(tree);
+                }
 
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
@@ -132,7 +136,7 @@ namespace ComputingProject
 
             AABB range = new AABB(centre, size);
 
-            // Getting the objects that are 
+            // Getting the objects that are in range
             List<IQuadtreeObject> objects =  tree.QueryRange(range);
 
             bool hasCollided = false;
@@ -142,6 +146,10 @@ namespace ComputingProject
                     if (obj != quadObj) {
                         hasCollided = SAT.IsColliding(obj.collider, quadObj.collider);
                         if (hasCollided) {
+
+                            obj.colour = System.Drawing.Brushes.Black;
+                            quadObj.colour = System.Drawing.Brushes.Black;
+
                             // Update the velocity
 
                             // Formula to work velocity after two objects collide.
@@ -162,6 +170,7 @@ namespace ComputingProject
                             vel1.y = (obj.velocity.y * (obj.Mass - quadObj.Mass) + (2 * quadObj.Mass * quadObj.velocity.y)) / masses;
                             //obj.velocity = new Velocity(obj.velocity.x + vel1.x, obj.velocity.y + vel1.y);
 
+                            // Then set the velocity to the new velocity
                             obj.velocity = vel1;
 
                             // Work out the velocity of object 2

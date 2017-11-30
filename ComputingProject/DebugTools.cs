@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 namespace ComputingProject {
     public class DebugTools {
         public static bool DebugMode = false;
+        public static bool UseCollision = true;
     }
 }

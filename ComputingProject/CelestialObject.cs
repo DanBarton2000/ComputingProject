@@ -23,6 +23,12 @@ namespace ComputingProject
                 double x = value * Math.Cos(radians);
                 double y = value * Math.Sin(radians);
                 velocity = new Velocity(x, y);
+
+                Console.WriteLine("Degrees to radians: " + Constants.DegreesToRadians);
+                Console.WriteLine("Bearing: " + Bearing);
+                Console.WriteLine("Radians: " + radians);
+                Console.WriteLine(velocity.ToString());
+
                 totalVelocity = value;
             }
         } // Split into X and Y 
