@@ -24,10 +24,12 @@ namespace ComputingProject
                 double y = value * Math.Sin(radians);
                 velocity = new Vector(x, y);
 
-                Console.WriteLine("Degrees to radians: " + Constants.DegreesToRadians);
-                Console.WriteLine("Bearing: " + Bearing);
-                Console.WriteLine("Radians: " + radians);
-                Console.WriteLine(velocity.ToString());
+                if (DebugTools.DebugMode) {
+                    Console.WriteLine("Degrees to radians: " + Constants.DegreesToRadians);
+                    Console.WriteLine("Bearing: " + Bearing);
+                    Console.WriteLine("Radians: " + radians);
+                    Console.WriteLine(velocity.ToString());
+                }
 
                 totalVelocity = value;
             }
