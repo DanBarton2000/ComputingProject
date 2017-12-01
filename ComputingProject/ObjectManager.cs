@@ -179,7 +179,7 @@ namespace ComputingProject
                             obj.collider.isColliding = true;
                             quadObj.collider.isColliding = true;
 
-                            if (DebugTools.DebugMode) {
+                            if (DebugTools.PrintCollisionVelocities) {
                                 // Print out the name of the class, the name of the objects and the velocity of each object
                                 Console.WriteLine("Object Manager - Name: " + obj.Name + " Velocity: " + obj.velocity.ToString());
                                 Console.WriteLine("Object Manager - Name: " + quadObj.Name + " Velocity: " + quadObj.velocity.ToString());
@@ -200,8 +200,8 @@ namespace ComputingProject
         static Vector[] OnCollision(IQuadtreeObject obj1, IQuadtreeObject obj2) {
             Vector[] velocities = new Vector[2];
 
-            velocities[0] = obj1.velocity * -3;
-            velocities[1] = obj2.velocity * -3;
+            velocities[0] = obj1.velocity * -0.5;
+            velocities[1] = obj2.velocity * -0.5;
 
             return velocities;
         }
