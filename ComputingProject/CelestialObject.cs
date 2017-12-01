@@ -93,7 +93,7 @@ namespace ComputingProject
 
             forces[0] = forceX;
             forces[1] = forceY;
-            
+
             return forces;
         }
 
@@ -102,6 +102,7 @@ namespace ComputingProject
         #region Static Methods
         public static CelestialObject SpawnCopy(CelestialObject co, Vector newPosition) {
             CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, co.totalVelocity, co.Bearing, newPosition, co.colour, co.collider);
+
             if (coObj.collider != null) {
                 if (coObj.collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)coObj.collider;
@@ -111,6 +112,7 @@ namespace ComputingProject
                     Vector difference = co.position - newPosition;
                     PolygonCollider pc = (PolygonCollider)coObj.collider;
 
+                    // Update the position of the vertices
                     foreach (Vector vert in pc.Vertices) {
                         vert.x += difference.x;
                         vert.y += difference.y;

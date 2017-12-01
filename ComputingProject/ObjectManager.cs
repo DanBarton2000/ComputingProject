@@ -115,6 +115,7 @@ namespace ComputingProject
                     co.velocity = new Vector(co.velocity.x * Math.Abs(velocityRebound), co.velocity.y * velocityRebound);
                 }
 
+                // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
                     Console.WriteLine("OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
                 }
@@ -169,31 +170,7 @@ namespace ComputingProject
 
                             // Combined masses
                             double masses = quadObj.Mass + obj.Mass;
-
-                            /*
-                             Vector vel1 = new Vector();
-                             obj.position.x = (obj.position.x * obj.Mass + quadObj.position.x * quadObj.Mass) / masses;
-                             obj.position.y = (obj.position.y * obj.Mass + quadObj.position.y * quadObj.Mass) / masses;
-
-                             // Then set the velocity to the new velocity
-
-                             obj.velocity *= obj.Mass / masses;
-
-                             quadObj.velocity *= quadObj.Mass / masses;
-
-                             //Vector vel1Norm = obj.velocity.Normalise();
-
-                             //obj.velocity = new Vector(obj.velocity.x * vel1Norm.x, quadObj.velocity.y * vel1Norm.y);
-
-                             // Work out the velocity of object 2
-                             Vector vel2 = new Vector();
-                             //vel2.x = -(obj.velocity.x * obj.Mass + quadObj.velocity.x * quadObj.Mass) / masses;
-                             //vel2.y = -(obj.velocity.y * obj.Mass + quadObj.velocity.y * quadObj.Mass) / masses;
-
-                             //quadObj.velocity = vel2;
-
-                             */
-
+                   
                             Vector[] velocities = OnCollision(obj, quadObj);
 
                             obj.velocity = velocities[0];
@@ -203,8 +180,9 @@ namespace ComputingProject
                             quadObj.collider.isColliding = true;
 
                             if (DebugTools.DebugMode) {
-                                //Console.WriteLine(typeof(ObjectManager) + " Vel1: " + vel1.ToString());
-                                //Console.WriteLine(typeof(ObjectManager) + " Vel2: " + vel2.ToString());
+                                // Print out the name of the class, the name of the objects and the velocity of each object
+                                Console.WriteLine("Object Manager - Name: " + obj.Name + " Velocity: " + obj.velocity.ToString());
+                                Console.WriteLine("Object Manager - Name: " + quadObj.Name + " Velocity: " + quadObj.velocity.ToString());
                             }
                         }
                         else {
