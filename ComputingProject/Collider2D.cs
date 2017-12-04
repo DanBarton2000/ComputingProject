@@ -11,5 +11,7 @@ namespace ComputingProject.Collision
         public bool isColliding;
         public CelestialObject attachedObject { get; protected set; }
         public ColliderType colliderType { get; protected set; }
+        //public double timeFromLastCollision = 0.3;
+        //public double maxTimeFromLastCollision = 0.3;     
     }
 }

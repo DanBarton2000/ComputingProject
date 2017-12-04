@@ -87,24 +87,7 @@ namespace ComputingProject
                 double addPositionX = co.velocity.x * timeStep * scale;
                 double addPositionY = co.velocity.y * timeStep * scale;
 
-                co.position.x += addPositionX;
-                co.position.y += addPositionY;
-
-                if (co.collider != null) {
-                    if (co.collider.colliderType == ColliderType.Circle) {
-                        // Update the position of the circle collider.
-                        CircleCollider cc = (CircleCollider)co.collider;
-                        cc.centre.Set(co.position.x, co.position.y);
-                    }
-                    else if (co.collider.colliderType == ColliderType.Polygon) {
-                        // Update the position of the vertices on the polygon collider
-                        PolygonCollider pc = (PolygonCollider)co.collider;
-                        foreach (Vector vert in pc.Vertices) {
-                            vert.x += addPositionX;
-                            vert.y += addPositionY;
-                        }
-                    }
-                }
+                co.position += new Vector(addPositionX, addPositionX);
 
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
@@ -160,13 +143,7 @@ namespace ComputingProject
                             obj.colour = System.Drawing.Brushes.Black;
                             quadObj.colour = System.Drawing.Brushes.Black;
 
-                            // Update the velocity
-
-                            /*
-                            self.x = (self.x * self.mass + other.x * other.mass) / total_mass
-                            self.y = (self.y * self.mass + other.y * other.mass) / total_mass
-                            self.speed = self.speed * self.mass / total_mass
-                            other.speed = other.speed * other.mass / total_mass */
+                            // Update the velocity after collision
 
                             // Combined masses
                             double masses = quadObj.Mass + obj.Mass;
@@ -181,8 +158,8 @@ namespace ComputingProject
 
                             if (DebugTools.PrintCollisionVelocities) {
                                 // Print out the name of the class, the name of the objects and the velocity of each object
-                                Console.WriteLine("Object Manager - Name: " + obj.Name + " Velocity: " + obj.velocity.ToString());
-                                Console.WriteLine("Object Manager - Name: " + quadObj.Name + " Velocity: " + quadObj.velocity.ToString());
+                                Console.WriteLine("(1) Object Manager - Name: " + obj.Name + " \t Velocity: " + obj.velocity.ToString());
+                                Console.WriteLine("(2) Object Manager - Name: " + quadObj.Name + "\t Velocity: " + quadObj.velocity.ToString());
                             }
                         }
                         else {
@@ -197,11 +174,26 @@ namespace ComputingProject
             tree.ClearQuad();
         }
 
+        // Update the velocites of the objects
         static Vector[] OnCollision(IQuadtreeObject obj1, IQuadtreeObject obj2) {
+
+            // Implement MTV to fix issues
+            // https://blogs.msdn.microsoft.com/faber/2013/01/09/elastic-collisions-of-balls/
+
             Vector[] velocities = new Vector[2];
 
-            velocities[0] = obj1.velocity * -0.5;
-            velocities[1] = obj2.velocity * -0.5;
+            double combinedMasses = obj1.Mass + obj2.Mass;
+            double differenceObj1Obj2Mass = obj1.Mass - obj2.Mass;
+            double differenceObj2Obj1Mass = obj2.Mass - obj1.Mass;
+
+            double obj1Horizontal = obj1.velocity.x * ((differenceObj1Obj2Mass) / (combinedMasses)) + ((2 * obj2.Mass * obj2.velocity.x) / (combinedMasses));
+            double obj1Vertical = obj1.velocity.y * ((differenceObj1Obj2Mass) / (combinedMasses)) + ((2 * obj2.Mass * obj2.velocity.y) / (combinedMasses));
+
+            double obj2Horizontal = obj2.velocity.x * ((differenceObj2Obj1Mass) / (combinedMasses)) + ((2 * obj1.Mass * obj1.velocity.x) / (combinedMasses));
+            double obj2Vertical = obj2.velocity.y * ((differenceObj2Obj1Mass) / (combinedMasses)) + ((2 * obj1.Mass * obj1.velocity.y) / (combinedMasses));
+
+            velocities[0] = new Vector(obj1Horizontal, obj1Vertical);
+            velocities[1] = new Vector(obj2Horizontal, obj2Vertical);
 
             return velocities;
         }

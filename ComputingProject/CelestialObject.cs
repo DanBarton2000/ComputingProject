@@ -3,6 +3,7 @@ using System.Windows.Shapes;
 //using System.Windows.Media;
 using System.Drawing;
 using ComputingProject.Collision;
+using ComputingProject;
 
 namespace ComputingProject
 {
@@ -14,6 +15,8 @@ namespace ComputingProject
         // Mass of the objects measured in kilogrammes
         private double mass;
         private double totalVelocity;
+
+        private Vector _position;
 
         public Brush colour { get; set; }
 
@@ -38,9 +41,38 @@ namespace ComputingProject
 
         public double Bearing { get; set; } // The bearing in degrees
 
-        public Vector position { get; set; }
+        public Vector position { get { return _position; } set {
+                if (collider != null) {
+
+                    // Update the position of the circle collider
+                    if (collider.colliderType == ColliderType.Circle) {
+                        CircleCollider col = (CircleCollider)collider;
+                        col.centre.Set(value.x, value.y);
+                    }
+
+                    // Update the position of the polygon vertices
+                    else if (collider.colliderType == ColliderType.Polygon) {
+                        PolygonCollider col = (PolygonCollider)collider;
+
+                        for (int i = 0; i < col.Vertices.Count; i++) {
+                            col.Vertices[i] += value;
+                        }
+                    }
+                }
+
+                _position = value;
+            }
+        }
     
-        public string Name { get { return name; } set { if (value != null || value != "") name = value; } }
+        public string Name { get { return name; } set {
+                if (value != null || value != "") {
+                    name = value;
+                }
+                else {
+                    Console.WriteLine("Not a valid name!");
+                }
+            }
+        }
 
         public Collider2D collider { get; set; }
 

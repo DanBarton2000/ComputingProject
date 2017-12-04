@@ -15,6 +15,5 @@ namespace ComputingProject {
         public static bool DrawVelocityArrows = true;
         // If true, print the velocities after a collision
         public static bool PrintCollisionVelocities = true;
-
     }
 }
