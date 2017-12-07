@@ -142,7 +142,6 @@ namespace ComputingProject
 
                             obj.colour = System.Drawing.Brushes.Black;
                             quadObj.colour = System.Drawing.Brushes.Black;
-
                             // Update the velocity after collision
 
                             // Combined masses

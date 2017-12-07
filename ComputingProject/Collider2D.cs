@@ -8,10 +8,8 @@ namespace ComputingProject.Collision
 {
     public class Collider2D
     {
-        public bool isColliding;
+        public bool isColliding = false;
         public CelestialObject attachedObject { get; protected set; }
         public ColliderType colliderType { get; protected set; }
-        //public double timeFromLastCollision = 0.3;
-        //public double maxTimeFromLastCollision = 0.3;     
     }
 }
