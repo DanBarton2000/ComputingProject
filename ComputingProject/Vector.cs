@@ -45,6 +45,11 @@ namespace ComputingProject
             this.y = y;
         }
 
+        public void Set(Vector v) {
+            x = v.x;
+            y = v.y;
+        }
+
         /// <summary>
         /// Returns the normalised vector
         /// </summary>

@@ -158,7 +158,7 @@ namespace ComputingProject
 
                             if (DebugTools.PrintCollisionVelocities) {
                                 // Print out the name of the class, the name of the objects and the velocity of each object
-                                Console.WriteLine("(1) Object Manager - Name: " + obj.Name + " \t Velocity: " + obj.velocity.ToString());
+                                Console.WriteLine("(1) Object Manager - Name: " + obj.Name + "\t Velocity: " + obj.velocity.ToString());
                                 Console.WriteLine("(2) Object Manager - Name: " + quadObj.Name + "\t Velocity: " + quadObj.velocity.ToString());
                             }
                         }

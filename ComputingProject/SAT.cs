@@ -8,7 +8,12 @@ namespace ComputingProject.Collision
 {
     public class SAT
     {
-
+        /// <summary>
+        /// Method that checks to see if two colliders are colliding, not dependent on collider type
+        /// </summary>
+        /// <param name="col1"></param>
+        /// <param name="col2"></param>
+        /// <returns>Returns whether 2 colliders are colliding</returns>
         public static bool IsColliding(Collider2D col1, Collider2D col2) {
             // Check for circle collision
             if (col1 != null && col2 != null) {
