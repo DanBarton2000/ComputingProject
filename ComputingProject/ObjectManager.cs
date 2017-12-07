@@ -102,7 +102,7 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
+                    Console.WriteLine("Object Manager -  OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
                 }
             }
         }

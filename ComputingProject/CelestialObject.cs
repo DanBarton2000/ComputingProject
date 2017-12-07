@@ -28,10 +28,10 @@ namespace ComputingProject
                 velocity = new Vector(x, y);
 
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Degrees to radians: " + Constants.DegreesToRadians);
-                    Console.WriteLine("Bearing: " + Bearing);
-                    Console.WriteLine("Radians: " + radians);
-                    Console.WriteLine(velocity.ToString());
+                    Console.WriteLine("Celestial Object - Degrees to radians: " + Constants.DegreesToRadians);
+                    Console.WriteLine("Celestial Object - Bearing: " + Bearing);
+                    Console.WriteLine("Celestial Object - Radians: " + radians);
+                    Console.WriteLine("Celestial Object - Velocity:" + velocity.ToString());
                 }
 
                 totalVelocity = value;
