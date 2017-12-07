@@ -29,7 +29,7 @@ namespace ComputingProject
         }
 
         /// <summary>
-        /// Returns a list of objects of type "type"
+        /// Returns a list of objects of type "T"
         /// </summary>
         /// <param name="type"></param>
         /// <returns>List of objects of type "type"</returns>
@@ -55,8 +55,10 @@ namespace ComputingProject
                 foreach (IQuadtreeObject cobj in AllObjects) {
                     if (!EqualityComparer<IQuadtreeObject>.Default.Equals(co, cobj)) {
                         double[] force = co.Attraction(cobj);
-                        fx += force[0];
-                        fy += force[1];
+                        if (force != null) {
+                            fx += force[0];
+                            fy += force[1];
+                        }
                     }
                 }
                 double[] totalForces = new double[2] { fx, fy };
@@ -77,12 +79,12 @@ namespace ComputingProject
 
 
                 // If the velocity becomes too high, set it to a lower value
-                if (co.velocity.x > 500) {
+                /*if (co.velocity.x > 500) {
                     co.velocity.x = 300;
                 }
                 else if (co.velocity.y > 500) {
                     co.velocity.y = 300;
-                }
+                } */ 
 
                 double addPositionX = co.velocity.x * timeStep * scale;
                 double addPositionY = co.velocity.y * timeStep * scale;
