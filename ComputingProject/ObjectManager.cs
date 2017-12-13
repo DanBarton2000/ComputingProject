@@ -84,12 +84,9 @@ namespace ComputingProject
                 }
                 else if (co.velocity.y > 500) {
                     co.velocity.y = 300;
-                } */ 
+                } */
 
-                double addPositionX = co.velocity.x * timeStep * scale;
-                double addPositionY = co.velocity.y * timeStep * scale;
-
-                co.position += new Vector(addPositionX, addPositionX);
+                co.position += co.velocity * timeStep;
 
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
@@ -102,7 +99,7 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager -  OBJ: " + co.Name + " X: " + co.position.x + " Y: " + co.position.y);
+                    Console.WriteLine("Object Manager -  OBJ: " + co.Name + " X: " + co.position.x / scale + " Y: " + co.position.y / scale);
                 }
             }
         }

@@ -84,11 +84,33 @@ namespace ComputingProject
 
         public CelestialObject() { }
         
-        public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour, Collider2D col) {
+       /* public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
             Bearing = bearing;
             TotalVelocity = velocity;
+            this.position = position;
+            this.colour = colour;
+            collider = col;
+
+            if (collider != null) {
+                if (collider.colliderType == ColliderType.Circle) {
+                    CircleCollider cc = (CircleCollider)collider;
+                    cc.centre.Set(position.x, position.y);
+                }
+            }
+
+            ObjectManager.AddObject(this);
+        }*/ 
+
+        public CelestialObject(string name, double mass, Vector vel,  Vector position, Brush colour, Collider2D col) {
+            this.name = name;
+            this.mass = mass;
+
+            velocity = new Vector();
+
+            velocity.x = vel.x;
+            velocity.y = vel.y;
             this.position = position;
             this.colour = colour;
             collider = col;
@@ -133,7 +155,7 @@ namespace ComputingProject
 
         #region Static Methods
         public static CelestialObject SpawnCopy(CelestialObject co, Vector newPosition) {
-            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, co.totalVelocity, co.Bearing, newPosition, co.colour, co.collider);
+            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector(co.velocity.x, co.velocity.y), newPosition, co.colour, co.collider);
 
             if (coObj.collider != null) {
                 if (coObj.collider.colliderType == ColliderType.Circle) {
