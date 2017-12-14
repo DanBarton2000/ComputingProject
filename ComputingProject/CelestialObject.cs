@@ -174,7 +174,12 @@ namespace ComputingProject
 
             return forces;
         }
-    
+
+        public override string ToString()
+        {
+            return "Name: " + name + " Position: " + position.ToString() + " Velocity: " + velocity.ToString() + " Mass: " + mass;
+        }
+
         #endregion
 
         #region Static Methods
