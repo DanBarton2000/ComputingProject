@@ -94,7 +94,8 @@ namespace ComputingProject
                     co.velocity.y = 300;
                 } */
 
-                co.position += co.velocity * timeStep;
+                co.position.x += co.velocity.x * timeStep;
+                co.position.y += co.velocity.y * timeStep;
 
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
@@ -107,8 +108,9 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager -  OBJ: " + co.Name + " X: " + co.position.x / Constants.AstronomicalUnit + " Y: " + co.position.y / Constants.AstronomicalUnit);
-                    Console.WriteLine("Object Manager - Forces OBJ: " + co.Name + " X: " + f[0] + " Y: " + f[1]);
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - X: " + co.position.x  + " Y: " + co.position.y);
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces - X: " + f[0] + " Y: " + f[1] + "\n");
                 }
             }
         }

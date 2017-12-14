@@ -82,6 +82,9 @@ namespace ComputingProject
 
         #region Methods
 
+        /// <summary>
+        /// Empty constuctor, creates an empty object but does not assign any values too it
+        /// </summary>
         public CelestialObject() { }
         
         /// <summary>
@@ -122,14 +125,12 @@ namespace ComputingProject
         /// <param name="position"></param>
         /// <param name="colour"></param>
         /// <param name="col"></param>
-        public CelestialObject(string name, double mass, Vector vel,  Vector position, Brush colour, Collider2D col) {
+        public CelestialObject(string name, double mass, Vector velocity,  Vector position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
 
-            velocity = new Vector();
+            this.velocity = velocity;
 
-            velocity.x = vel.x;
-            velocity.y = vel.y;
             this.position = position;
             this.colour = colour;
             collider = col;
@@ -145,7 +146,7 @@ namespace ComputingProject
         }
 
         /// <summary>
-        /// Calculate the force between this object and another object
+        /// Calculate the force between this object and another object then return the values
         /// </summary>
         /// <param name="co"></param>
         /// <returns></returns>
