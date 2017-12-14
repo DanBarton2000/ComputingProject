@@ -37,11 +37,19 @@ namespace ComputingProject
             return AllObjects.Where(x => x.GetType() == typeof(T)).ToList();
         }
 
+        /// <summary>
+        /// Called once per frame
+        /// Updates the positions of the objects
+        /// </summary>
+        /// <param name="timeStep"></param>
+        /// <param name="scale"></param>
+        /// <param name="tree"></param>
+        /// <param name="velocityRebound"></param>
         public static void Update(double timeStep, double scale, QuadTree<IQuadtreeObject> tree, double velocityRebound = -1) {
 
             // Checking to make sure that there is a Quadtree available
             if (tree == null)
-                throw new Exception("Tree is null!");
+                throw new Exception("Quadtree is null!");
 
             // If the simulation is paused, don't update
             if (TimeController.isPaused) {
@@ -105,14 +113,26 @@ namespace ComputingProject
             }
         }
 
+        /// <summary>
+        /// Add an object to the list
+        /// </summary>
+        /// <param name="co"></param>
         public static void AddObject(IQuadtreeObject co) {
             AllObjects.Add(co);
         }
 
+        /// <summary>
+        /// Set the bounds of the screen
+        /// </summary>
+        /// <param name="bounds"></param>
         public static void SetScreenBounds(Vector bounds) {
             screenBounds = bounds;
         }
 
+        /// <summary>
+        /// Perform the necessary checks for collision between objects
+        /// </summary>
+        /// <param name="tree"></param>
         public static void UpdateCollision(QuadTree<IQuadtreeObject> tree) {
 
             // Insert objects into the tree

@@ -84,7 +84,17 @@ namespace ComputingProject
 
         public CelestialObject() { }
         
-       /* public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour, Collider2D col) {
+        /// <summary>
+        /// Constuctor that takes in a bearing and a velocity
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="mass"></param>
+        /// <param name="velocity"></param>
+        /// <param name="bearing"></param>
+        /// <param name="position"></param>
+        /// <param name="colour"></param>
+        /// <param name="col"></param>
+        public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
             Bearing = bearing;
@@ -101,8 +111,17 @@ namespace ComputingProject
             }
 
             ObjectManager.AddObject(this);
-        }*/ 
+        }
 
+        /// <summary>
+        /// Constructor that take in a velocity of type Vector
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="mass"></param>
+        /// <param name="vel"></param>
+        /// <param name="position"></param>
+        /// <param name="colour"></param>
+        /// <param name="col"></param>
         public CelestialObject(string name, double mass, Vector vel,  Vector position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
@@ -125,6 +144,11 @@ namespace ComputingProject
             ObjectManager.AddObject(this);
         }
 
+        /// <summary>
+        /// Calculate the force between this object and another object
+        /// </summary>
+        /// <param name="co"></param>
+        /// <returns></returns>
         public double[] Attraction(IQuadtreeObject co) {
             double[] forces = new double[2];
             double distance = Vector.DistanceSqr(position, co.position);
@@ -150,10 +174,16 @@ namespace ComputingProject
 
             return forces;
         }
-
+    
         #endregion
 
         #region Static Methods
+        /// <summary>
+        /// Spawns a copy of an object
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="newPosition"></param>
+        /// <returns></returns>
         public static CelestialObject SpawnCopy(CelestialObject co, Vector newPosition) {
             CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector(co.velocity.x, co.velocity.y), newPosition, co.colour, co.collider);
 
