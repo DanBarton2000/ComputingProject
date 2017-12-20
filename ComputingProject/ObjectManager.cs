@@ -85,15 +85,6 @@ namespace ComputingProject
                     UpdateCollision(tree);
                 }
 
-
-                // If the velocity becomes too high, set it to a lower value
-                /*if (co.velocity.x > 500) {
-                    co.velocity.x = 300;
-                }
-                else if (co.velocity.y > 500) {
-                    co.velocity.y = 300;
-                } */
-
                 co.position.x += co.velocity.x * timeStep;
                 co.position.y += co.velocity.y * timeStep;
 
@@ -108,9 +99,9 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - X: " + co.position.x  + " Y: " + co.position.y);
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + co.position.ToString());
                     Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces - X: " + f[0] + " Y: " + f[1] + "\n");
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces   - X: " + f[0] + " Y: " + f[1] + "\n");
                 }
             }
         }
@@ -162,8 +153,10 @@ namespace ComputingProject
                         hasCollided = SAT.IsColliding(obj.collider, quadObj.collider);
                         if (hasCollided && !obj.collider.isColliding && !quadObj.collider.isColliding) {
 
+                            // Set the colours of the objects to black so that it is easy to spot that they have collided
                             obj.colour = System.Drawing.Brushes.Black;
                             quadObj.colour = System.Drawing.Brushes.Black;
+
                             // Update the velocity after collision
 
                             // Combined masses
