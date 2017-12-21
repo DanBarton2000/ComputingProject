@@ -152,8 +152,11 @@ namespace ComputingProject
         /// <returns></returns>
         public double[] Attraction(IQuadtreeObject co) {
             double[] forces = new double[2];
+
+            // Calculate the distance between the objects
             double distance = Vector.DistanceSqr(position, co.position);
 
+            // If the objects are on top of each other, a DivideByZero error would occur so return
             if (distance == 0) {
                 Console.WriteLine("Objects {0} {1} are on top of each other!", Name, co.Name);
                 return null;
@@ -162,11 +165,14 @@ namespace ComputingProject
             // Using the formula F = GMm/d^2
             double force = (Constants.Gravitational * Mass * co.Mass) / distance;
 
+            // Calculate the difference in the x and y components 
             double differenceX = Vector.DifferenceX(position, co.position);
             double differenceY = Vector.DifferenceY(position, co.position);
 
+            // Calculate the angle between the objects
             double theta = Math.Atan2(differenceY, differenceX);
 
+            // Split the force in the x and y components
             double forceX = force * Math.Cos(theta);
             double forceY = force * Math.Sin(theta);
 
@@ -176,6 +182,10 @@ namespace ComputingProject
             return forces;
         }
 
+        /// <summary>
+        /// Returns the name, position, velocity and the mass of the object in a string format
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return "Name: " + name + " Position: " + position.ToString() + " Velocity: " + velocity.ToString() + " Mass: " + mass;

@@ -56,6 +56,12 @@ namespace ComputingProject
                 return;
             }
 
+            // Check to see if there are objects in the list
+            // if not return
+            if (AllObjects == null) {
+                return;
+            }
+
             Dictionary<IQuadtreeObject, double[]> forces = new Dictionary<IQuadtreeObject, double[]>();
             foreach (IQuadtreeObject co in AllObjects) {
                 fx = 0;
@@ -79,12 +85,15 @@ namespace ComputingProject
                 double x = f[0] / massTimeStep;
                 double y = f[1] / massTimeStep;
 
-                co.velocity = new Vector(co.velocity.x + x, co.velocity.y + y);
+                // Update the velocity
+                co.velocity.Add(x, y);
 
+                // Update collisions
                 if (DebugTools.UseCollision) {
                     UpdateCollision(tree);
                 }
 
+                // Update the position of the object
                 co.position.x += co.velocity.x * timeStep;
                 co.position.y += co.velocity.y * timeStep;
 
@@ -99,7 +108,7 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + co.position.ToString());
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position * scale).ToString());
                     Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
                     Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces   - X: " + f[0] + " Y: " + f[1] + "\n");
                 }

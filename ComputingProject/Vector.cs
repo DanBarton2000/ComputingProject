@@ -50,6 +50,11 @@ namespace ComputingProject
             y = v.y;
         }
 
+        public void Add(double x, double y) {
+            this.x += x;
+            this.y += y;
+        }
+
         /// <summary>
         /// Returns the normalised vector
         /// </summary>
