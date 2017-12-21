@@ -79,6 +79,10 @@ namespace ComputingProject
                 forces.Add(co, totalForces);
             }
 
+            if (DebugTools.DebugMode) {
+                forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1)));
+            }
+
             foreach (IQuadtreeObject co in AllObjects) {
                 double[] f = forces[co];
                 double massTimeStep = co.Mass * timeStep;
@@ -108,7 +112,7 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position / Constants.AstronomicalUnit).ToString());
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position * scale).ToString());
                     Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
                     Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces   - X: " + f[0] + " Y: " + f[1] + "\n");
                 }
