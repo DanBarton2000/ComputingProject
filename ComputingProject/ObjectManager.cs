@@ -108,7 +108,7 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position * scale).ToString());
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position / Constants.AstronomicalUnit).ToString());
                     Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
                     Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces   - X: " + f[0] + " Y: " + f[1] + "\n");
                 }
