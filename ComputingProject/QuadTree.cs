@@ -69,18 +69,18 @@ namespace ComputingProject.Collision
         }
 
         public void SubDivide() {
-            Vector size = Boundary.halfDimension / 2;
+            Vector2 size = Boundary.halfDimension / 2;
 
-            Vector centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
+            Vector2 centre = new Vector2(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
             northWest = new QuadTree<T>(new AABB(centre, size));
 
-            centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
+            centre = new Vector2(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y - Boundary.halfDimension.y);
             northEast = new QuadTree<T>(new AABB(centre, size));
             
-            centre = new Vector(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
+            centre = new Vector2(Boundary.centre.x - Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
             southWest = new QuadTree<T>(new AABB(centre, size));
             
-            centre = new Vector(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
+            centre = new Vector2(Boundary.centre.x + Boundary.halfDimension.x, Boundary.centre.y + Boundary.halfDimension.y);
             southEast = new QuadTree<T>(new AABB(centre, size));
         }
 

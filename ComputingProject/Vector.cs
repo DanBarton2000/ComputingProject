@@ -2,17 +2,17 @@
 
 namespace ComputingProject
 {
-    public class Vector
+    public class Vector2
     {
         #region Variables
         public double x { get; set; }
         public double y { get; set; }
 
-        public Vector Normalised
+        public Vector2 Normalised
         {
             get
             {
-                Vector vector = Normalise();
+                Vector2 vector = Normalise();
                 this.x = vector.x;
                 this.y = vector.y;
                 return vector;
@@ -23,12 +23,12 @@ namespace ComputingProject
         #endregion
 
         #region Non-static Methods
-        public Vector() {
+        public Vector2() {
             x = 0;
             y = 0;
         }
 
-        public Vector(double x, double y)
+        public Vector2(double x, double y)
         {
             this.x = x;
             this.y = y;
@@ -45,7 +45,7 @@ namespace ComputingProject
             this.y = y;
         }
 
-        public void Set(Vector v) {
+        public void Set(Vector2 v) {
             x = v.x;
             y = v.y;
         }
@@ -54,9 +54,9 @@ namespace ComputingProject
         /// Returns the normalised vector
         /// </summary>
         /// <returns></returns>
-        public Vector Normalise()
+        public Vector2 Normalise()
         {
-            return new Vector(x / Magnitude, y / Magnitude);
+            return new Vector2(x / Magnitude, y / Magnitude);
         }
 
         public override string ToString()
@@ -84,7 +84,7 @@ namespace ComputingProject
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns></returns>
-        public static double Angle(Vector v1, Vector v2)
+        public static double Angle(Vector2 v1, Vector2 v2)
         {
             return Math.Acos(Dot(v1, v2)/ (v1.Magnitude * v2.Magnitude));
         }
@@ -95,7 +95,7 @@ namespace ComputingProject
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns></returns>
-        public static double Dot(Vector v1, Vector v2)
+        public static double Dot(Vector2 v1, Vector2 v2)
         {
             return (v1.x * v2.x) + (v1.y * v2.y);
         }
@@ -106,48 +106,48 @@ namespace ComputingProject
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns></returns>
-        public static double Distance(Vector v1, Vector v2)
+        public static double Distance(Vector2 v1, Vector2 v2)
         {
             return Math.Sqrt(Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2));
         }
 
-        public static double DistanceSqr(Vector v1, Vector v2)
+        public static double DistanceSqr(Vector2 v1, Vector2 v2)
         {
             return Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2);
         }
 
-        public static double DifferenceX(Vector v1, Vector v2) {
+        public static double DifferenceX(Vector2 v1, Vector2 v2) {
             return v2.x - v1.x;
         }
 
-        public static double DifferenceY(Vector v1, Vector v2) {
+        public static double DifferenceY(Vector2 v1, Vector2 v2) {
             return v2.y - v1.y;
         }
 
-        public static Vector operator +(Vector v1, Vector v2)
+        public static Vector2 operator +(Vector2 v1, Vector2 v2)
         {
-            return new Vector(v1.x + v2.x, v1.y + v2.y);
+            return new Vector2(v1.x + v2.x, v1.y + v2.y);
         }
 
-        public static Vector operator -(Vector v1, Vector v2)
+        public static Vector2 operator -(Vector2 v1, Vector2 v2)
         {
-            return new Vector(v1.x - v2.x, v1.y - v2.y);
+            return new Vector2(v1.x - v2.x, v1.y - v2.y);
         }
 
-        public static Vector operator *(Vector v1, double scaler)
+        public static Vector2 operator *(Vector2 v1, double scaler)
         {
             if (ReferenceEquals(v1, null)) {
                 return null;
             }
-            return new Vector(v1.x * scaler, v1.y * scaler);
+            return new Vector2(v1.x * scaler, v1.y * scaler);
         }
 
-        public static Vector operator /(Vector v1, double scaler)
+        public static Vector2 operator /(Vector2 v1, double scaler)
         {
-            return new Vector(v1.x / scaler, v1.y / scaler);
+            return new Vector2(v1.x / scaler, v1.y / scaler);
         }
 
-        public static bool operator ==(Vector v1, Vector v2)
+        public static bool operator ==(Vector2 v1, Vector2 v2)
         {
             if (!ReferenceEquals(v1, null) && !ReferenceEquals(v2, null)) {
                 return v1.x == v2.x && v1.y == v2.y;
@@ -158,7 +158,7 @@ namespace ComputingProject
             return false;
         }
 
-        public static bool operator !=(Vector v1, Vector v2)
+        public static bool operator !=(Vector2 v1, Vector2 v2)
         {
             if (!ReferenceEquals(v1, null) && !ReferenceEquals(v2, null)) {
                 return v1.x != v2.x || v1.y != v2.y;

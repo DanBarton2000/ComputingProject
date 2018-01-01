@@ -37,7 +37,7 @@ namespace ComputingProject.Collision
         }
 
         public static bool IsCollidingCircles(CircleCollider col1, CircleCollider col2) {
-            Vector v = col1.centre - col2.centre;
+            Vector2 v = col1.centre - col2.centre;
             if (v.Magnitude < col1.radius + col2.radius) {
                 return true;
             }
@@ -45,10 +45,10 @@ namespace ComputingProject.Collision
         }
 
         public static bool IsCollidingPolygonCircle(PolygonCollider col1, CircleCollider col2) {
-            List<Vector> edges = new List<Vector>();
+            List<Vector2> edges = new List<Vector2>();
             edges = CalculateEdges(col1.Vertices);
             for (int i = 0; i < edges.Count; i++) {
-                if (Vector.Distance(col2.centre, edges[i]) < col2.radius) {
+                if (Vector2.Distance(col2.centre, edges[i]) < col2.radius) {
                     return true;
                 }
             }
@@ -56,16 +56,16 @@ namespace ComputingProject.Collision
         }
 
         public static bool IsCollidingPolygons(PolygonCollider col1, PolygonCollider col2) {
-            List<Vector> edges = CalculateEdges(col1.Vertices);
+            List<Vector2> edges = CalculateEdges(col1.Vertices);
             edges.AddRange(CalculateEdges(col2.Vertices));
 
-            List<Vector> normals = new List<Vector>();
+            List<Vector2> normals = new List<Vector2>();
 
-            foreach (Vector edge in edges) {
+            foreach (Vector2 edge in edges) {
                 normals.Add(CalculateNormal(edge));
             }
 
-            foreach (Vector normal in normals) {
+            foreach (Vector2 normal in normals) {
                 bool isSeparated = IsSeparatingAxis(normal, col1, col2);
                 if (!isSeparated) {
                     return false;
@@ -75,35 +75,35 @@ namespace ComputingProject.Collision
             return true;
         }
 
-        static List<Vector> CalculateEdges(List<Vector> vertices) {
-            List<Vector> edges = new List<Vector>();
+        static List<Vector2> CalculateEdges(List<Vector2> vertices) {
+            List<Vector2> edges = new List<Vector2>();
             int length = vertices.Count;
 
             for (int i = 0; i < length; i++) {
-                Vector edge = vertices[(i + 1) % length] - vertices[i];
+                Vector2 edge = vertices[(i + 1) % length] - vertices[i];
                 edges.Add(edge);
             }
             return edges;
         }
 
-        public static Vector CalculateNormal(Vector point) {
-            return new Vector(-point.y, point.x);
+        public static Vector2 CalculateNormal(Vector2 point) {
+            return new Vector2(-point.y, point.x);
         }
 
-        static bool IsSeparatingAxis(Vector normal, PolygonCollider col1, PolygonCollider col2) {
+        static bool IsSeparatingAxis(Vector2 normal, PolygonCollider col1, PolygonCollider col2) {
             double min1 = double.PositiveInfinity;
             double max1 = double.NegativeInfinity;
             double min2 = double.PositiveInfinity;
             double max2 = double.NegativeInfinity;
 
-            foreach (Vector point in col1.Vertices) {
-                double projection = Vector.Dot(point, normal);
+            foreach (Vector2 point in col1.Vertices) {
+                double projection = Vector2.Dot(point, normal);
                 min1 = Math.Min(min1, projection);
                 max1 = Math.Max(max1, projection);
             }
 
-            foreach (Vector point in col2.Vertices) {
-                double projection = Vector.Dot(point, normal);
+            foreach (Vector2 point in col2.Vertices) {
+                double projection = Vector2.Dot(point, normal);
                 min2 = Math.Min(min2, projection);
                 max2 = Math.Max(max2, projection);
             }

@@ -11,7 +11,7 @@ namespace ComputingProject
     {
         #region Variables
 
-        private static Vector screenBounds;
+        private static Vector2 screenBounds;
         private static double fx, fy;
 
         public static List<IQuadtreeObject> AllObjects { get; private set; } = new List<IQuadtreeObject>();
@@ -71,7 +71,7 @@ namespace ComputingProject
                 double x = f[0] / massTimeStep;
                 double y = f[1] / massTimeStep;
 
-                co.velocity = new Vector(co.velocity.x + x, co.velocity.y + y);
+                co.velocity = new Vector2(co.velocity.x + x, co.velocity.y + y);
 
                 if (DebugTools.UseCollision) {
                     UpdateCollision(tree);
@@ -91,10 +91,10 @@ namespace ComputingProject
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
                 if (co.position.x < 0 || co.position.x > screenBounds.x) {
-                    co.velocity = new Vector(co.velocity.x * velocityRebound, co.velocity.y * Math.Abs(velocityRebound));
+                    co.velocity = new Vector2(co.velocity.x * velocityRebound, co.velocity.y * Math.Abs(velocityRebound));
                 }
                 else if (co.position.y < 0 || co.position.y > screenBounds.y) {
-                    co.velocity = new Vector(co.velocity.x * Math.Abs(velocityRebound), co.velocity.y * velocityRebound);
+                    co.velocity = new Vector2(co.velocity.x * Math.Abs(velocityRebound), co.velocity.y * velocityRebound);
                 }
 
                 // Print the position of the object to the console
@@ -109,7 +109,7 @@ namespace ComputingProject
             AllObjects.Add(co);
         }
 
-        public static void SetScreenBounds(Vector bounds) {
+        public static void SetScreenBounds(Vector2 bounds) {
             screenBounds = bounds;
         }
 
@@ -122,10 +122,10 @@ namespace ComputingProject
 
             // The centre of the query range
             // Currently will be just the size of the screen
-            Vector centre = new Vector(tree.Boundary.centre.x, tree.Boundary.centre.y);
+            Vector2 centre = new Vector2(tree.Boundary.centre.x, tree.Boundary.centre.y);
 
             // The half size of the query range
-            Vector size = centre;
+            Vector2 size = centre;
 
             AABB range = new AABB(centre, size);
 
@@ -147,7 +147,7 @@ namespace ComputingProject
                             // Combined masses
                             double masses = quadObj.Mass + obj.Mass;
                    
-                            Vector[] velocities = OnCollision(obj, quadObj);
+                            Vector2[] velocities = OnCollision(obj, quadObj);
 
                             obj.velocity = velocities[0];
                             quadObj.velocity = velocities[1];
@@ -174,12 +174,12 @@ namespace ComputingProject
         }
 
         // Update the velocites of the objects
-        static Vector[] OnCollision(IQuadtreeObject obj1, IQuadtreeObject obj2) {
+        static Vector2[] OnCollision(IQuadtreeObject obj1, IQuadtreeObject obj2) {
 
             // Implement MTV to fix issues
             // https://blogs.msdn.microsoft.com/faber/2013/01/09/elastic-collisions-of-balls/
 
-            Vector[] velocities = new Vector[2];
+            Vector2[] velocities = new Vector2[2];
 
             double combinedMasses = obj1.Mass + obj2.Mass;
             double differenceObj1Obj2Mass = obj1.Mass - obj2.Mass;
@@ -191,8 +191,8 @@ namespace ComputingProject
             double obj2Horizontal = obj2.velocity.x * ((differenceObj2Obj1Mass) / (combinedMasses)) + ((2 * obj1.Mass * obj1.velocity.x) / (combinedMasses));
             double obj2Vertical = obj2.velocity.y * ((differenceObj2Obj1Mass) / (combinedMasses)) + ((2 * obj1.Mass * obj1.velocity.y) / (combinedMasses));
 
-            velocities[0] = new Vector(obj1Horizontal, obj1Vertical);
-            velocities[1] = new Vector(obj2Horizontal, obj2Vertical);
+            velocities[0] = new Vector2(obj1Horizontal, obj1Vertical);
+            velocities[1] = new Vector2(obj2Horizontal, obj2Vertical);
 
             return velocities;
         }

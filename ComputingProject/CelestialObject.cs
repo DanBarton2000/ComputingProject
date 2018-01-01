@@ -16,7 +16,7 @@ namespace ComputingProject
         private double mass;
         private double totalVelocity;
 
-        private Vector _position;
+        private Vector2 _position;
 
         public Brush colour { get; set; }
 
@@ -25,7 +25,7 @@ namespace ComputingProject
                 double radians = Bearing * Constants.DegreesToRadians;
                 double x = value * Math.Cos(radians);
                 double y = value * Math.Sin(radians);
-                velocity = new Vector(x, y);
+                velocity = new Vector2(x, y);
 
                 if (DebugTools.DebugMode) {
                     Console.WriteLine("Celestial Object - Degrees to radians: " + Constants.DegreesToRadians);
@@ -37,11 +37,11 @@ namespace ComputingProject
                 totalVelocity = value;
             }
         } // Split into X and Y 
-        public Vector velocity { get; set; }
+        public Vector2 velocity { get; set; }
 
         public double Bearing { get; set; } // The bearing in degrees
 
-        public Vector position { get { return _position; } set {
+        public Vector2 position { get { return _position; } set {
                 if (collider != null) {
 
                     // Update the position of the circle collider
@@ -103,11 +103,11 @@ namespace ComputingProject
             ObjectManager.AddObject(this);
         }*/ 
 
-        public CelestialObject(string name, double mass, Vector vel,  Vector position, Brush colour, Collider2D col) {
+        public CelestialObject(string name, double mass, Vector2 vel,  Vector2 position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
 
-            velocity = new Vector();
+            velocity = new Vector2();
 
             velocity.x = vel.x;
             velocity.y = vel.y;
@@ -127,7 +127,7 @@ namespace ComputingProject
 
         public double[] Attraction(IQuadtreeObject co) {
             double[] forces = new double[2];
-            double distance = Vector.DistanceSqr(position, co.position);
+            double distance = Vector2.DistanceSqr(position, co.position);
 
             if (distance == 0) {
                 Console.WriteLine("Objects {0} {1} are on top of each other!", Name, co.Name);
@@ -137,8 +137,8 @@ namespace ComputingProject
             // Using the formula F = GMm/d^2
             double force = (Constants.Gravitational * Mass * co.Mass) / distance;
 
-            double differenceX = Vector.DifferenceX(position, co.position);
-            double differenceY = Vector.DifferenceY(position, co.position);
+            double differenceX = Vector2.DifferenceX(position, co.position);
+            double differenceY = Vector2.DifferenceY(position, co.position);
 
             double theta = Math.Atan2(differenceY, differenceX);
 
@@ -154,8 +154,8 @@ namespace ComputingProject
         #endregion
 
         #region Static Methods
-        public static CelestialObject SpawnCopy(CelestialObject co, Vector newPosition) {
-            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector(co.velocity.x, co.velocity.y), newPosition, co.colour, co.collider);
+        public static CelestialObject SpawnCopy(CelestialObject co, Vector2 newPosition) {
+            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.colour, co.collider);
 
             if (coObj.collider != null) {
                 if (coObj.collider.colliderType == ColliderType.Circle) {
@@ -163,11 +163,11 @@ namespace ComputingProject
                     cc.centre.Set(newPosition.x, newPosition.y);
                 }
                 else if (coObj.collider.colliderType == ColliderType.Polygon) {
-                    Vector difference = co.position - newPosition;
+                    Vector2 difference = co.position - newPosition;
                     PolygonCollider pc = (PolygonCollider)coObj.collider;
 
                     // Update the position of the vertices
-                    foreach (Vector vert in pc.Vertices) {
+                    foreach (Vector2 vert in pc.Vertices) {
                         vert.x += difference.x;
                         vert.y += difference.y;
                     }

@@ -8,10 +8,10 @@ namespace ComputingProject.Collision
 {
     public class CircleCollider : Collider2D
     {
-        public Vector centre { get; private set; }
+        public Vector2 centre { get; private set; }
         public double radius { get; private set; }
 
-        public CircleCollider(Vector centre, double radius) {
+        public CircleCollider(Vector2 centre, double radius) {
             colliderType = ColliderType.Circle;
             this.centre = centre;
             this.radius = radius;

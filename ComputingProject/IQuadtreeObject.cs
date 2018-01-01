@@ -9,9 +9,9 @@ using ComputingProject.Collision;
 namespace ComputingProject {
     public interface IQuadtreeObject {
         Collider2D collider { get; set; }
-        Vector position { get; set; }
+        Vector2 position { get; set; }
         string Name { get; set; }
-        Vector velocity { get; set; }
+        Vector2 velocity { get; set; }
         double Mass { get; set; }
         Brush colour { get; set; }
 

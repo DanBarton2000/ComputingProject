@@ -8,15 +8,15 @@ namespace ComputingProject.Collision
 {
     public struct AABB
     {
-        public Vector centre;
-        public Vector halfDimension;
+        public Vector2 centre;
+        public Vector2 halfDimension;
 
-        public AABB(Vector centre, Vector halfDimension) {
+        public AABB(Vector2 centre, Vector2 halfDimension) {
             this.centre = centre;
             this.halfDimension = halfDimension;
         }
 
-        public bool ContainsPoint(Vector point) {
+        public bool ContainsPoint(Vector2 point) {
             double minX = centre.x - halfDimension.x;
             double minY = centre.y - halfDimension.y;
             double maxX = centre.x + halfDimension.x;
