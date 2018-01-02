@@ -79,12 +79,25 @@ namespace ComputingProject
         // Radius of the graphic and the collider (if it is a circle collider)
         public double radius { get { return radius; } set { if (value > 0 && value < 100) { radius = value; } } } 
         #endregion
-
+         
         #region Methods
 
+        /// <summary>
+        /// Empty constuctor, creates an empty object but does not assign any values too it
+        /// </summary>
         public CelestialObject() { }
         
-       /* public CelestialObject(string name, double mass, double velocity, double bearing, Vector position, Brush colour, Collider2D col) {
+        /// <summary>
+        /// Constuctor that takes in a bearing and a velocity
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="mass"></param>
+        /// <param name="velocity"></param>
+        /// <param name="bearing"></param>
+        /// <param name="position"></param>
+        /// <param name="colour"></param>
+        /// <param name="col"></param>
+        public CelestialObject(string name, double mass, double velocity, double bearing, Vector2 position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
             Bearing = bearing;
@@ -101,16 +114,23 @@ namespace ComputingProject
             }
 
             ObjectManager.AddObject(this);
-        }*/ 
+        }
 
-        public CelestialObject(string name, double mass, Vector2 vel,  Vector2 position, Brush colour, Collider2D col) {
+
+        /// <summary>
+        /// Constructor that take in a velocity of type Vector
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="mass"></param>
+        /// <param name="vel"></param>
+        /// <param name="position"></param>
+        /// <param name="colour"></param>
+        /// <param name="col"></param>
+        public CelestialObject(string name, double mass, Vector2 velocity, Vector2 position, Brush colour, Collider2D col) {
             this.name = name;
             this.mass = mass;
 
-            velocity = new Vector2();
-
-            velocity.x = vel.x;
-            velocity.y = vel.y;
+            this.velocity = velocity;
             this.position = position;
             this.colour = colour;
             collider = col;
@@ -125,10 +145,18 @@ namespace ComputingProject
             ObjectManager.AddObject(this);
         }
 
+        /// <summary>
+        /// Calculate the force between this object and another object then return the values
+        /// </summary>
+        /// <param name="co"></param>
+        /// <returns></returns>
         public double[] Attraction(IQuadtreeObject co) {
             double[] forces = new double[2];
+
             double distance = Vector2.DistanceSqr(position, co.position);
 
+
+            // If the objects are on top of each other, a DivideByZero error would occur so return
             if (distance == 0) {
                 Console.WriteLine("Objects {0} {1} are on top of each other!", Name, co.Name);
                 return null;
@@ -140,8 +168,10 @@ namespace ComputingProject
             double differenceX = Vector2.DifferenceX(position, co.position);
             double differenceY = Vector2.DifferenceY(position, co.position);
 
+            // Calculate the angle between the objects
             double theta = Math.Atan2(differenceY, differenceX);
 
+            // Split the force in the x and y components
             double forceX = force * Math.Cos(theta);
             double forceY = force * Math.Sin(theta);
 
@@ -149,6 +179,15 @@ namespace ComputingProject
             forces[1] = forceY;
 
             return forces;
+        }
+
+        /// <summary>
+        /// Returns the name, position, velocity and the mass of the object in a string format
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "Name: " + name + " Position: " + position.ToString() + " Velocity: " + velocity.ToString() + " Mass: " + mass;
         }
 
         #endregion

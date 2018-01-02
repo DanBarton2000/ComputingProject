@@ -37,14 +37,28 @@ namespace ComputingProject
             return AllObjects.Where(x => x.GetType() == typeof(T)).ToList();
         }
 
+        /// <summary>
+        /// Called once per frame
+        /// Updates the positions of the objects
+        /// </summary>
+        /// <param name="timeStep"></param>
+        /// <param name="scale"></param>
+        /// <param name="tree"></param>
+        /// <param name="velocityRebound"></param>
         public static void Update(double timeStep, double scale, QuadTree<IQuadtreeObject> tree, double velocityRebound = -1) {
 
             // Checking to make sure that there is a Quadtree available
             if (tree == null)
-                throw new Exception("Tree is null!");
+                throw new Exception("Quadtree is null!");
 
             // If the simulation is paused, don't update
             if (TimeController.isPaused) {
+                return;
+            }
+
+            // Check to see if there are objects in the list
+            // if not return
+            if (AllObjects == null) {
                 return;
             }
 
@@ -65,28 +79,27 @@ namespace ComputingProject
                 forces.Add(co, totalForces);
             }
 
+            if (DebugTools.DebugMode) {
+                forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1)));
+            }
+
             foreach (IQuadtreeObject co in AllObjects) {
                 double[] f = forces[co];
                 double massTimeStep = co.Mass * timeStep;
                 double x = f[0] / massTimeStep;
                 double y = f[1] / massTimeStep;
 
-                co.velocity = new Vector2(co.velocity.x + x, co.velocity.y + y);
+                // Update the velocity
+                co.velocity.Add(x, y);
 
+                // Update collisions
                 if (DebugTools.UseCollision) {
                     UpdateCollision(tree);
                 }
 
-
-                // If the velocity becomes too high, set it to a lower value
-                /*if (co.velocity.x > 500) {
-                    co.velocity.x = 300;
-                }
-                else if (co.velocity.y > 500) {
-                    co.velocity.y = 300;
-                } */
-
-                co.position += co.velocity * timeStep;
+                // Update the position of the object
+                co.position.x += co.velocity.x * timeStep;
+                co.position.y += co.velocity.y * timeStep;
 
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
@@ -99,20 +112,30 @@ namespace ComputingProject
 
                 // Print the position of the object to the console
                 if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager -  OBJ: " + co.Name + " X: " + co.position.x / Constants.AstronomicalUnit + " Y: " + co.position.y / Constants.AstronomicalUnit);
-                    Console.WriteLine("Object Manager - Forces OBJ: " + co.Name + " X: " + f[0] + " Y: " + f[1]);
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position * scale).ToString());
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
+                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces   - X: " + f[0] + " Y: " + f[1] + "\n");
                 }
             }
         }
 
+        /// <summary>
+        /// Add an object to the list
+        /// </summary>
+        /// <param name="co"></param>
         public static void AddObject(IQuadtreeObject co) {
             AllObjects.Add(co);
         }
 
         public static void SetScreenBounds(Vector2 bounds) {
+
             screenBounds = bounds;
         }
 
+        /// <summary>
+        /// Perform the necessary checks for collision between objects
+        /// </summary>
+        /// <param name="tree"></param>
         public static void UpdateCollision(QuadTree<IQuadtreeObject> tree) {
 
             // Insert objects into the tree
@@ -140,8 +163,10 @@ namespace ComputingProject
                         hasCollided = SAT.IsColliding(obj.collider, quadObj.collider);
                         if (hasCollided && !obj.collider.isColliding && !quadObj.collider.isColliding) {
 
+                            // Set the colours of the objects to black so that it is easy to spot that they have collided
                             obj.colour = System.Drawing.Brushes.Black;
                             quadObj.colour = System.Drawing.Brushes.Black;
+
                             // Update the velocity after collision
 
                             // Combined masses

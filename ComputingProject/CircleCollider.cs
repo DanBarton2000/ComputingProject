@@ -16,5 +16,10 @@ namespace ComputingProject.Collision
             this.centre = centre;
             this.radius = radius;
         }
+
+        public override string ToString()
+        {
+            return "Centre: " + centre.ToString() + " Radius: " + radius;
+        }
     }
 }

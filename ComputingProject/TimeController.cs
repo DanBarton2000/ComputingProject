@@ -42,5 +42,10 @@ namespace ComputingProject {
             currentTimeStep = defaultTimeStep;
         }
 
+        public override string ToString()
+        {
+            return "Current Time Step: " + currentTimeStep + 
+                   "\nDefault Time Step: " + defaultTimeStep;
+        }
     }
 }
