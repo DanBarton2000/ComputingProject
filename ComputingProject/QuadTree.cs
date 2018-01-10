@@ -29,6 +29,11 @@ namespace ComputingProject.Collision
             Boundary = boundary;
         }
 
+        /// <summary>
+        /// Insert a point into the quadtree
+        /// </summary>
+        /// <param name="point">The point being inserted into the quadtree</param>
+        /// <returns></returns>
         public bool Insert(T point) {
             if (!Boundary.ContainsPoint(point.position)) {
                 return false;

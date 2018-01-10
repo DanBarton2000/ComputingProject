@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ComputingProject.Collision;
 
 namespace ComputingProject
 {
     public class Star : CelestialObject
     {
+        public Star() { }
+
+        public Star(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col) {
+            Name = name;
+            Mass = mass;
+            this.velocity = velocity;
+            this.position = position;
+            collider = col;
+        }
+
         public double SolarMassOfStar { get {
                 return Mass / Constants.SolarMass;
             }
