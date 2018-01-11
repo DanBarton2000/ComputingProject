@@ -67,11 +67,9 @@ namespace ComputingProject
                 fx = 0;
                 fy = 0;
                 foreach (IQuadtreeObject cobj in AllObjects.ToList()) {
-<<<<<<< HEAD
+
                     if (co != cobj) {
-=======
-                    if (!EqualityComparer<IQuadtreeObject>.Default.Equals(co, cobj)) {
->>>>>>> 5e7cd78596e2da02a015424f221bf82d7751885c
+
                         double[] force = co.Attraction(cobj);
                         if (force != null) {
                             fx += force[0];
