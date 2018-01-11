@@ -63,10 +63,10 @@ namespace ComputingProject
             }
 
             Dictionary<IQuadtreeObject, double[]> forces = new Dictionary<IQuadtreeObject, double[]>();
-            foreach (IQuadtreeObject co in AllObjects) {
+            foreach (IQuadtreeObject co in AllObjects.ToList()) {
                 fx = 0;
                 fy = 0;
-                foreach (IQuadtreeObject cobj in AllObjects) {
+                foreach (IQuadtreeObject cobj in AllObjects.ToList()) {
                     if (!EqualityComparer<IQuadtreeObject>.Default.Equals(co, cobj)) {
                         double[] force = co.Attraction(cobj);
                         if (force != null) {
@@ -83,7 +83,7 @@ namespace ComputingProject
                 forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1)));
             }
 
-            foreach (IQuadtreeObject co in AllObjects) {
+            foreach (IQuadtreeObject co in AllObjects.ToList()) {
                 double[] f = forces[co];
                 double massTimeStep = co.Mass * timeStep;
                 double x = f[0] / massTimeStep;

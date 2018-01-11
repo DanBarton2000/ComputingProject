@@ -39,5 +39,9 @@ namespace ComputingProject.Collision
             }
             return false;
         }
+
+        public override string ToString() {
+            return "Centre - " + centre.ToString() + " Half Dimension - " + halfDimension.ToString();
+        }
     }
 }
