@@ -29,6 +29,11 @@ namespace ComputingProject.Collision
             Boundary = boundary;
         }
 
+        /// <summary>
+        /// Insert a point into the quadtree
+        /// </summary>
+        /// <param name="point">The point being inserted into the quadtree</param>
+        /// <returns></returns>
         public bool Insert(T point) {
             if (!Boundary.ContainsPoint(point.position)) {
                 return false;
@@ -60,6 +65,10 @@ namespace ComputingProject.Collision
             return false;
         }
 
+        /// <summary>
+        /// Delete a point from the quadtree
+        /// </summary>
+        /// <param name="point"></param>
         public void Delete(T point) {
             for (int i = 0; i < points.Length; i++) {
                 if (EqualityComparer<T>.Default.Equals(points[i], point)) {
@@ -67,7 +76,10 @@ namespace ComputingProject.Collision
                 }
             }
         }
-
+        
+        /// <summary>
+        /// SubDivide the current quadtree
+        /// </summary>
         public void SubDivide() {
             Vector2 size = Boundary.halfDimension / 2;
 
@@ -84,6 +96,11 @@ namespace ComputingProject.Collision
             southEast = new QuadTree<T>(new AABB(centre, size));
         }
 
+        /// <summary>
+        /// Query's a range using recursion
+        /// </summary>
+        /// <param name="range">What range should be queried</param>
+        /// <returns></returns>
         public List<T> QueryRange(AABB range) {
             List<T> pointsInRange = new List<T>();
 

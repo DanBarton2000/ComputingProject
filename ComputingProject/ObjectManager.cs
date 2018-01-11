@@ -67,7 +67,11 @@ namespace ComputingProject
                 fx = 0;
                 fy = 0;
                 foreach (IQuadtreeObject cobj in AllObjects.ToList()) {
+<<<<<<< HEAD
                     if (co != cobj) {
+=======
+                    if (!EqualityComparer<IQuadtreeObject>.Default.Equals(co, cobj)) {
+>>>>>>> 5e7cd78596e2da02a015424f221bf82d7751885c
                         double[] force = co.Attraction(cobj);
                         if (force != null) {
                             fx += force[0];
@@ -83,7 +87,7 @@ namespace ComputingProject
                 forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1) + "\n"));
             }
 
-            foreach (IQuadtreeObject co in AllObjects) {
+            foreach (IQuadtreeObject co in AllObjects.ToList()) {
                 double[] f = forces[co];
                 double massTimeStep = co.Mass * timeStep;
                 double x = f[0] / massTimeStep;
@@ -133,8 +137,11 @@ namespace ComputingProject
             AllObjects.Add(co);
         }
 
-        public static void SetScreenBounds(Vector2 bounds) {
+        public static void ClearObjects() {
+            AllObjects.Clear();
+        }
 
+        public static void SetScreenBounds(Vector2 bounds) {
             screenBounds = bounds;
         }
 
