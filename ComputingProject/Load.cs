@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using System.IO;
 
 namespace ComputingProject {
+
     public class Load {
         public List<CelestialObject> ReadXML(string filename) {
             try {

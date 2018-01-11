@@ -127,8 +127,11 @@ namespace ComputingProject
             AllObjects.Add(co);
         }
 
-        public static void SetScreenBounds(Vector2 bounds) {
+        public static void ClearObjects() {
+            AllObjects.Clear();
+        }
 
+        public static void SetScreenBounds(Vector2 bounds) {
             screenBounds = bounds;
         }
 
