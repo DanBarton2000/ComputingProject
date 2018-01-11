@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows.Shapes;
-//using System.Windows.Media;
-using System.Drawing;
 using ComputingProject.Collision;
 using ComputingProject;
 
@@ -18,7 +16,6 @@ namespace ComputingProject
 
         private Vector2 _position;
 
-        public Brush colour { get; set; }
 
         public double Mass { get { return mass; } set { if (value > 0) { mass = value; } } }
         public double TotalVelocity { get { return totalVelocity; } set {
@@ -97,13 +94,13 @@ namespace ComputingProject
         /// <param name="position"></param>
         /// <param name="colour"></param>
         /// <param name="col"></param>
-        public CelestialObject(string name, double mass, double velocity, double bearing, Vector2 position, Brush colour, Collider2D col) {
+        public CelestialObject(string name, double mass, double velocity, double bearing, Vector2 position, Collider2D col) {
             this.name = name;
             this.mass = mass;
             Bearing = bearing;
             TotalVelocity = velocity;
             this.position = position;
-            this.colour = colour;
+
             collider = col;
 
             if (collider != null) {
@@ -126,13 +123,12 @@ namespace ComputingProject
         /// <param name="position"></param>
         /// <param name="colour"></param>
         /// <param name="col"></param>
-        public CelestialObject(string name, double mass, Vector2 velocity, Vector2 position, Brush colour, Collider2D col) {
+        public CelestialObject(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col) {
             this.name = name;
             this.mass = mass;
 
             this.velocity = velocity;
             this.position = position;
-            this.colour = colour;
             collider = col;
 
             if (collider != null) {
@@ -194,7 +190,7 @@ namespace ComputingProject
 
         #region Static Methods
         public static CelestialObject SpawnCopy(CelestialObject co, Vector2 newPosition) {
-            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.colour, co.collider);
+            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.collider);
 
             if (coObj.collider != null) {
                 if (coObj.collider.colliderType == ColliderType.Circle) {
