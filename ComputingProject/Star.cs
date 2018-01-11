@@ -11,12 +11,8 @@ namespace ComputingProject
     {
         public Star() { }
 
-        public Star(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col) {
-            Name = name;
-            Mass = mass;
-            this.velocity = velocity;
-            this.position = position;
-            collider = col;
+        public Star(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col) : base(name, mass, velocity, position, col) {
+
         }
 
         public double SolarMassOfStar { get {

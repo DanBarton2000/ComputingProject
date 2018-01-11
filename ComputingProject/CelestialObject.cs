@@ -19,8 +19,6 @@ namespace ComputingProject
         private Vector2 _position;
         private Vector2 _screenPosition;
 
-        public Brush colour { get; set; }
-
         public double Mass { get { return mass; } set { if (value > 0) { mass = value; } } }
         public double TotalVelocity { get { return totalVelocity; } set {
                 double radians = Bearing * Constants.DegreesToRadians;
@@ -98,15 +96,13 @@ namespace ComputingProject
         /// <param name="velocity"></param>
         /// <param name="bearing"></param>
         /// <param name="position"></param>
-        /// <param name="colour"></param>
         /// <param name="col"></param>
-        public CelestialObject(string name, double mass, double velocity, double bearing, Vector2 position, Brush colour, Collider2D col) {
+        public CelestialObject(string name, double mass, double velocity, double bearing, Vector2 position, Collider2D col) {
             this.name = name;
             this.mass = mass;
             Bearing = bearing;
             TotalVelocity = velocity;
             this.position = position;
-            this.colour = colour;
             collider = col;
 
             screenPosition = new Vector2();
@@ -129,15 +125,13 @@ namespace ComputingProject
         /// <param name="mass"></param>
         /// <param name="vel"></param>
         /// <param name="position"></param>
-        /// <param name="colour"></param>
         /// <param name="col"></param>
-        public CelestialObject(string name, double mass, Vector2 velocity, Vector2 position, Brush colour, Collider2D col) {
+        public CelestialObject(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col) {
             this.name = name;
             this.mass = mass;
 
             this.velocity = velocity;
             this.position = position;
-            this.colour = colour;
             collider = col;
 
             screenPosition = new Vector2();
@@ -152,7 +146,7 @@ namespace ComputingProject
             ObjectManager.AddObject(this);
         }
 
-        public CelestialObject(string name, double mass, Vector2 velocity, Brush colour, Collider2D col, Vector2 screenPosition) {
+        public CelestialObject(string name, double mass, Vector2 velocity, Collider2D col, Vector2 screenPosition) {
             this.name = name;
             this.mass = mass;
 
@@ -161,7 +155,6 @@ namespace ComputingProject
 
             position = new Vector2();
 
-            this.colour = colour;
             collider = col;
 
             screenPosition = new Vector2();
@@ -232,7 +225,7 @@ namespace ComputingProject
 
         #region Static Methods
         public static CelestialObject SpawnCopy(CelestialObject co, Vector2 newPosition) {
-            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.colour, co.collider);
+            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.collider);
 
             if (coObj.collider != null) {
                 if (coObj.collider.colliderType == ColliderType.Circle) {
