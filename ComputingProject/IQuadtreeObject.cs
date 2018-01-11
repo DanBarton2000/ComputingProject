@@ -10,6 +10,7 @@ namespace ComputingProject {
     public interface IQuadtreeObject {
         Collider2D collider { get; set; }
         Vector2 position { get; set; }
+        Vector2 screenPosition { get; set; }
         string Name { get; set; }
         Vector2 velocity { get; set; }
         double Mass { get; set; }

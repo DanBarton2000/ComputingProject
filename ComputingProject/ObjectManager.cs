@@ -63,11 +63,11 @@ namespace ComputingProject
             }
 
             Dictionary<IQuadtreeObject, double[]> forces = new Dictionary<IQuadtreeObject, double[]>();
-            foreach (IQuadtreeObject co in AllObjects) {
+            foreach (IQuadtreeObject co in AllObjects.ToList()) {
                 fx = 0;
                 fy = 0;
-                foreach (IQuadtreeObject cobj in AllObjects) {
-                    if (!EqualityComparer<IQuadtreeObject>.Default.Equals(co, cobj)) {
+                foreach (IQuadtreeObject cobj in AllObjects.ToList()) {
+                    if (co != cobj) {
                         double[] force = co.Attraction(cobj);
                         if (force != null) {
                             fx += force[0];
@@ -80,7 +80,7 @@ namespace ComputingProject
             }
 
             if (DebugTools.DebugMode) {
-                forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1)));
+                forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1) + "\n"));
             }
 
             foreach (IQuadtreeObject co in AllObjects) {
@@ -101,13 +101,19 @@ namespace ComputingProject
                 co.position.x += co.velocity.x * timeStep;
                 co.position.y += co.velocity.y * timeStep;
 
+                co.screenPosition = co.position * scale;
+
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
-                if (co.position.x < 0 || co.position.x > screenBounds.x) {
-                    co.velocity = new Vector2(co.velocity.x * velocityRebound, co.velocity.y * Math.Abs(velocityRebound));
-                }
-                else if (co.position.y < 0 || co.position.y > screenBounds.y) {
-                    co.velocity = new Vector2(co.velocity.x * Math.Abs(velocityRebound), co.velocity.y * velocityRebound);
+                if (screenBounds != null && co != null) {
+                    if (co.position != null) {
+                        if (co.position.x < 0 || co.position.x > screenBounds.x) {
+                            co.velocity = new Vector2(co.velocity.x * velocityRebound, co.velocity.y * Math.Abs(velocityRebound));
+                        }
+                        else if (co.position.y < 0 || co.position.y > screenBounds.y) {
+                            co.velocity = new Vector2(co.velocity.x * Math.Abs(velocityRebound), co.velocity.y * velocityRebound);
+                        }
+                    }
                 }
 
                 // Print the position of the object to the console

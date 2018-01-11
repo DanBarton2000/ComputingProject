@@ -122,10 +122,16 @@ namespace ComputingProject
         }
 
         public static double DifferenceX(Vector2 v1, Vector2 v2) {
+            if (v1 == null || v2 == null) {
+                return 0;
+            }
             return v2.x - v1.x;
         }
 
         public static double DifferenceY(Vector2 v1, Vector2 v2) {
+            if (v1 == null || v2 == null) {
+                return 0;
+            }
             return v2.y - v1.y;
         }
 

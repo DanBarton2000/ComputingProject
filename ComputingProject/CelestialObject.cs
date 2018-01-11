@@ -17,6 +17,7 @@ namespace ComputingProject
         private double totalVelocity;
 
         private Vector2 _position;
+        private Vector2 _screenPosition;
 
         public Brush colour { get; set; }
 
@@ -63,6 +64,8 @@ namespace ComputingProject
                 _position = value;
             }
         }
+
+        public  Vector2 screenPosition { get { if (_screenPosition == null) { return new Vector2(); } else { return _screenPosition; } } set { _screenPosition = value; } }
     
         public string Name { get { return name; } set {
                 if (value != null || value != "") {
@@ -106,6 +109,8 @@ namespace ComputingProject
             this.colour = colour;
             collider = col;
 
+            screenPosition = new Vector2();
+
             if (collider != null) {
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
@@ -135,6 +140,8 @@ namespace ComputingProject
             this.colour = colour;
             collider = col;
 
+            screenPosition = new Vector2();
+
             if (collider != null) {
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
@@ -145,12 +152,43 @@ namespace ComputingProject
             ObjectManager.AddObject(this);
         }
 
+        public CelestialObject(string name, double mass, Vector2 velocity, Brush colour, Collider2D col, Vector2 screenPosition) {
+            this.name = name;
+            this.mass = mass;
+
+            this.velocity = velocity;
+            this.screenPosition = screenPosition;
+
+            position = new Vector2();
+
+            this.colour = colour;
+            collider = col;
+
+            screenPosition = new Vector2();
+
+            if (collider != null) {
+                if (collider.colliderType == ColliderType.Circle) {
+                    CircleCollider cc = (CircleCollider)collider;
+                    cc.centre.Set(position.x, position.y);
+                }
+            }
+
+
+
+            ObjectManager.AddObject(this);
+        }
+
         /// <summary>
         /// Calculate the force between this object and another object then return the values
         /// </summary>
         /// <param name="co"></param>
         /// <returns></returns>
         public double[] Attraction(IQuadtreeObject co) {
+
+            if (co == null) {
+                return null;
+            }
+
             double[] forces = new double[2];
 
             double distance = Vector2.DistanceSqr(position, co.position);
