@@ -9,10 +9,10 @@ namespace ComputingProject
 {
     public class Star : CelestialObject
     {
-        // Empty contructor
         public Star() { }
 
         public Star(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col) : base(name, mass, velocity, position, col) {
+
         }
 
         public double SolarMassOfStar { get {
