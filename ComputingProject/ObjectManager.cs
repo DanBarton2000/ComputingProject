@@ -127,6 +127,10 @@ namespace ComputingProject
             AllObjects.Add(co);
         }
 
+        public static void AddRange(List<IQuadtreeObject> objects) {
+            AllObjects.AddRange(objects);
+        }
+
         public static void ClearObjects() {
             AllObjects.Clear();
         }
@@ -165,10 +169,6 @@ namespace ComputingProject
                     if (obj != quadObj) {
                         hasCollided = SAT.IsColliding(obj.collider, quadObj.collider);
                         if (hasCollided && !obj.collider.isColliding && !quadObj.collider.isColliding) {
-
-                            // Set the colours of the objects to black so that it is easy to spot that they have collided
-                            obj.colour = System.Drawing.Brushes.Black;
-                            quadObj.colour = System.Drawing.Brushes.Black;
 
                             // Update the velocity after collision
 
