@@ -9,7 +9,7 @@ using System.IO;
 namespace ComputingProject {
 
     public class Load {
-        public List<CelestialObject> ReadXML(string filename) {
+        public static List<CelestialObject> ReadXML(string filename) {
             try {
                 XmlSerializer reader = new XmlSerializer(typeof(CelestialObject));
 
