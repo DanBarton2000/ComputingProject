@@ -153,6 +153,13 @@ namespace ComputingProject
             return new Vector2(v1.x * scaler, v1.y * scaler);
         }
 
+        public static Vector2 operator *(double scaler, Vector2 v1) {
+            if (ReferenceEquals(v1, null)) {
+                return null;
+            }
+            return new Vector2(v1.x * scaler, v1.y * scaler);
+        }
+
         public static Vector2 operator /(Vector2 v1, double scaler)
         {
             return new Vector2(v1.x / scaler, v1.y / scaler);
