@@ -78,7 +78,9 @@ namespace ComputingProject
         public Collider2D collider { get; set; }
 
         // Radius of the graphic and the collider (if it is a circle collider)
-        public double radius { get { return radius; } set { if (value > 0 && value < 100) { radius = value; } } } 
+        public double radius { get { return radius; } set { if (value > 0 && value < 100) { radius = value; } } }
+
+        public ObjectVisuals visuals { get; set; }
         #endregion
          
         #region Methods
@@ -97,7 +99,7 @@ namespace ComputingProject
         /// <param name="bearing"></param>
         /// <param name="position"></param>
         /// <param name="col"></param>
-        public CelestialObject(string name, double mass, double velocity, double bearing, Vector2 position, Collider2D col) {
+        public CelestialObject(string name, double mass, double velocity, double bearing, Vector2 position, Collider2D col, ObjectVisuals visuals) {
             this.name = name;
             this.mass = mass;
             Bearing = bearing;
@@ -114,6 +116,8 @@ namespace ComputingProject
                 }
             }
 
+            this.visuals = visuals;
+
             ObjectManager.AddObject(this);
         }
 
@@ -126,7 +130,7 @@ namespace ComputingProject
         /// <param name="vel"></param>
         /// <param name="position"></param>
         /// <param name="col"></param>
-        public CelestialObject(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col) {
+        public CelestialObject(string name, double mass, Vector2 velocity, Vector2 position, Collider2D col, ObjectVisuals visuals) {
             this.name = name;
             this.mass = mass;
 
@@ -143,10 +147,12 @@ namespace ComputingProject
                 }
             }
 
+            this.visuals = visuals;
+
             ObjectManager.AddObject(this);
         }
 
-        public CelestialObject(string name, double mass, Vector2 velocity, Collider2D col, Vector2 screenPosition) {
+        public CelestialObject(string name, double mass, Vector2 velocity, Collider2D col, Vector2 screenPosition, ObjectVisuals visuals) {
             this.name = name;
             this.mass = mass;
 
@@ -166,7 +172,7 @@ namespace ComputingProject
                 }
             }
 
-
+            this.visuals = visuals;
 
             ObjectManager.AddObject(this);
         }
@@ -225,7 +231,7 @@ namespace ComputingProject
 
         #region Static Methods
         public static CelestialObject SpawnCopy(CelestialObject co, Vector2 newPosition) {
-            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.collider);
+            CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.collider, co.visuals);
 
             if (coObj.collider != null) {
                 if (coObj.collider.colliderType == ColliderType.Circle) {

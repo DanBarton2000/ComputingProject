@@ -9,7 +9,6 @@ namespace ComputingProject.Collision
     public class Collider2D
     {
         public bool isColliding = false;
-        public CelestialObject attachedObject { get; protected set; }
-        public ColliderType colliderType { get; protected set; }
+        public ColliderType colliderType { get; set; }
     }
 }

@@ -14,6 +14,8 @@ namespace ComputingProject {
         Vector2 velocity { get; set; }
         double Mass { get; set; }
 
+        ObjectVisuals visuals { get; set; }
+
         // Used for both gravitational and eletrical fields
         double[] Attraction(IQuadtreeObject co);
     }
