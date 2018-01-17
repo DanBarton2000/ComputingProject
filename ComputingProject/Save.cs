@@ -11,13 +11,21 @@ namespace ComputingProject
     public class Save
     {
         public static void WriteXML(string filename) {
-            XmlSerializer writer = new XmlSerializer(typeof(CelestialObject));
+            XmlSerializer writer = new XmlSerializer(typeof(List<CelestialObject>));
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + filename;
 
+            Console.WriteLine("Path: " + path);
+
             FileStream stream = File.Create(path);
 
-            writer.Serialize(stream, ObjectManager.AllObjects);
+            List<CelestialObject> objects = new List<CelestialObject>();
+
+            ObjectManager.AllObjects.ForEach(x => objects.Add(x as CelestialObject));
+
+            objects.ForEach(x => Console.WriteLine(x.ToString()));
+
+            writer.Serialize(stream, objects);
 
             stream.Close();
         }

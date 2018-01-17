@@ -13,8 +13,8 @@ namespace ComputingProject
             get
             {
                 Vector2 vector = Normalise();
-                this.x = vector.x;
-                this.y = vector.y;
+                x = vector.x;
+                y = vector.y;
                 return vector;
             }
         }
@@ -28,8 +28,7 @@ namespace ComputingProject
             y = 0;
         }
 
-        public Vector2(double x, double y)
-        {
+        public Vector2(double x, double y) {
             this.x = x;
             this.y = y;
         }
@@ -39,12 +38,15 @@ namespace ComputingProject
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void Set(double x, double y)
-        {
+        public void Set(double x, double y) {
             this.x = x;
             this.y = y;
         }
 
+        /// <summary>
+        /// Set the x and y values using a Vector2
+        /// </summary>
+        /// <param name="v"></param>
         public void Set(Vector2 v) {
             x = v.x;
             y = v.y;
@@ -53,6 +55,11 @@ namespace ComputingProject
         public void Add(double x, double y) {
             this.x += x;
             this.y += y;
+        }
+
+        public void Add(Vector2 v) {
+            x += v.x;
+            y += v.y;
         }
 
         /// <summary>
@@ -113,11 +120,17 @@ namespace ComputingProject
         /// <returns></returns>
         public static double Distance(Vector2 v1, Vector2 v2)
         {
+            if (v1 == null || v2 == null) {
+                return 0;
+            }
             return Math.Sqrt(Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2));
         }
 
         public static double DistanceSqr(Vector2 v1, Vector2 v2)
         {
+            if (v1 == null || v2 == null) {
+                return 0;
+            }
             return Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2);
         }
 
@@ -135,8 +148,17 @@ namespace ComputingProject
             return v2.y - v1.y;
         }
 
-        public static Vector2 operator +(Vector2 v1, Vector2 v2)
-        {
+        public static Vector2 operator +(Vector2 v1, Vector2 v2) {
+            if (v1 == null && v2 == null) {
+                return new Vector2();
+            }
+            else if (v1 == null) {
+                return v2;
+            }
+            else if (v2 == null) {
+                return v1;
+            }
+
             return new Vector2(v1.x + v2.x, v1.y + v2.y);
         }
 

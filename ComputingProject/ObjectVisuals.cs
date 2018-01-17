@@ -1,9 +1,13 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Xml.Serialization;
+using System.Windows.Media;
 
 namespace ComputingProject {
+    [Serializable]
     public class ObjectVisuals {
-        public SolidColorBrush colour { get; private set; }
-        public int size { get; private set; }
+        [XmlIgnore]
+        public SolidColorBrush colour { get; set; }
+        public int size { get; set; }
 
         public ObjectVisuals() {
             colour = Brushes.White;

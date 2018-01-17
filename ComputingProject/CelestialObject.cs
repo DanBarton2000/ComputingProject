@@ -3,10 +3,11 @@ using System.Windows.Shapes;
 //using System.Windows.Media;
 using System.Drawing;
 using ComputingProject.Collision;
-using ComputingProject;
+using System.Xml.Serialization;
 
 namespace ComputingProject
 {
+    [Serializable]
     public class CelestialObject : IQuadtreeObject
     {
         #region Variables
@@ -75,10 +76,12 @@ namespace ComputingProject
             }
         }
 
+        [XmlIgnore]
         public Collider2D collider { get; set; }
 
         // Radius of the graphic and the collider (if it is a circle collider)
-        public double radius { get { return radius; } set { if (value > 0 && value < 100) { radius = value; } } }
+        private double _radius;
+        public double radius { get { return _radius; } set { if (value > 0 && value < 100) { _radius = value; } } }
 
         public ObjectVisuals visuals { get; set; }
         #endregion
