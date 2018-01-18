@@ -133,11 +133,15 @@ namespace ComputingProject
         /// </summary>
         /// <param name="co"></param>
         public static void AddObject(IQuadtreeObject co) {
-            AllObjects.Add(co);
+            if (co != null) {
+                AllObjects.Add(co);
+            }
         }
 
         public static void AddRange(List<IQuadtreeObject> objects) {
-            AllObjects.AddRange(objects);
+            if (objects != null) {
+                AllObjects.AddRange(objects);
+            }
         }
 
         public static void ClearObjects() {

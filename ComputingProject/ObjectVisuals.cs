@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Windows.Media;
+using System.ComponentModel;
 
 namespace ComputingProject {
     [Serializable]
@@ -8,6 +9,10 @@ namespace ComputingProject {
         [XmlIgnore]
         public SolidColorBrush colour { get; set; }
         public int size { get; set; }
+
+        public string colourName { get; set; }
+
+        BrushConverter converter = new BrushConverter();
 
         public ObjectVisuals() {
             colour = Brushes.White;
@@ -23,6 +28,7 @@ namespace ComputingProject {
                 this.colour = Brushes.White;
             }
             this.colour = colour;
+            colourName = converter.ConvertToString(this.colour);
         }
 
         public void Set(int size) {
