@@ -13,7 +13,7 @@ namespace ComputingProject
         public static void WriteXML(string filename) {
             XmlSerializer writer = new XmlSerializer(typeof(List<CelestialObject>));
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + filename;
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + filename + ".xml";
 
             Console.WriteLine("Path: " + path);
 

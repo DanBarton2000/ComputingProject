@@ -13,7 +13,7 @@ namespace ComputingProject {
             try {
                 XmlSerializer reader = new XmlSerializer(typeof(CelestialObject));
 
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + filename;
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + filename + ".xml";
                 StreamReader file = new StreamReader(path);
                 List<CelestialObject> objects = (List<CelestialObject>)reader.Deserialize(file);
                 return objects;

@@ -14,6 +14,7 @@ namespace ComputingProject
         private static Vector2 screenBounds;
         private static double fx, fy;
 
+        [System.Xml.Serialization.XmlArray]
         public static List<IQuadtreeObject> AllObjects { get; private set; } = new List<IQuadtreeObject>();
         #endregion
 
