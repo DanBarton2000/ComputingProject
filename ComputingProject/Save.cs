@@ -10,6 +10,9 @@ namespace ComputingProject
 {
     public class Save
     {
+        [XmlArray("objects")]
+        static List<CelestialObject> objects;
+
         public static void WriteXML(string filename) {
             XmlSerializer writer = new XmlSerializer(typeof(List<CelestialObject>));
 
@@ -17,17 +20,26 @@ namespace ComputingProject
 
             Console.WriteLine("Path: " + path);
 
+            /*
             FileStream stream = File.Create(path);
 
-            List<CelestialObject> objects = new List<CelestialObject>();
+            List<IQuadtreeObject> objects = new List<IQuadtreeObject>();
 
-            ObjectManager.AllObjects.ForEach(x => objects.Add(x as CelestialObject));
+            ObjectManager.AllObjects.ForEach(x => objects.Add(x));
 
             objects.ForEach(x => Console.WriteLine(x.ToString()));
 
             writer.Serialize(stream, objects);
 
-            stream.Close();
+            stream.Close(); */
+
+            objects = new List<CelestialObject>();
+
+            ObjectManager.AllObjects.ForEach(x => objects.Add(x as CelestialObject));
+
+            using (FileStream stream = File.OpenWrite(path)) {
+                writer.Serialize(stream, objects);
+            }
         }
     }
 }

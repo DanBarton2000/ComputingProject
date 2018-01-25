@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ComputingProject.Collision;
+using System.Xml.Serialization;
 
 namespace ComputingProject
 {
@@ -14,7 +15,8 @@ namespace ComputingProject
         private static Vector2 screenBounds;
         private static double fx, fy;
 
-        [System.Xml.Serialization.XmlArray]
+        [XmlArray]
+        [XmlElement("AllObjects")]
         public static List<IQuadtreeObject> AllObjects { get; private set; } = new List<IQuadtreeObject>();
         #endregion
 

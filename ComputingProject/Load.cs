@@ -9,7 +9,7 @@ using System.IO;
 namespace ComputingProject {
 
     public class Load {
-        public static List<CelestialObject> ReadXML(string filename) {
+        public static List<IQuadtreeObject> ReadXML(string filename) {
             /*try {
                 XmlSerializer reader = new XmlSerializer(typeof(CelestialObject));
 
@@ -27,11 +27,18 @@ namespace ComputingProject {
             }*/
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + filename + ".xml";
 
-            using (StringReader stringReader = new StringReader(path)) {
-                XmlSerializer serializer = new XmlSerializer(typeof(CelestialObject));
+            XmlSerializer serializer = new XmlSerializer(typeof(CelestialObject));
 
-                return (List<CelestialObject>)serializer.Deserialize(stringReader);
+            List<IQuadtreeObject> objects;
+
+            using (FileStream stream = File.OpenRead(path)) {
+
+                objects = (List<IQuadtreeObject>)serializer.Deserialize(stream);
+
+                objects.ForEach(x => Console.WriteLine(x.ToString()));
             }
+
+            return objects;
         }
     }
 }

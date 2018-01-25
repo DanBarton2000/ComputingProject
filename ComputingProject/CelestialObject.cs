@@ -21,9 +21,9 @@ namespace ComputingProject
         private Vector2 _position;
         private Vector2 _screenPosition;
 
-        [XmlElement(ElementName = "mass")]
+        [XmlElement(ElementName = "Mass")]
         public double Mass { get { return mass; } set { if (value > 0) { mass = value; } } }
-        [XmlElement(ElementName = "total_velocity")]
+        [XmlElement(ElementName = "TotalVelocity")]
         public double TotalVelocity { get { return totalVelocity; } set {
                 double radians = Bearing * Constants.DegreesToRadians;
                 double x = value * Math.Cos(radians);
@@ -40,10 +40,11 @@ namespace ComputingProject
                 totalVelocity = value;
             }
         } // Split into X and Y 
-        [XmlElement(ElementName = "velocity")]
-        public Vector2 velocity { get; set; }
 
-        [XmlElement(ElementName = "bearing")]
+        [XmlElement(ElementName = "velocity")]
+        public Vector2 velocity { get; set; } // Velocity of the object in metres per second
+
+        [XmlElement(ElementName = "Bearing")]
         public double Bearing { get; set; } // The bearing in degrees
 
         [XmlElement(ElementName = "position")]
@@ -70,10 +71,10 @@ namespace ComputingProject
             }
         }
 
-        [XmlElement(ElementName = "screen_position")]
+        [XmlElement(ElementName = "screenPosition")]
         public  Vector2 screenPosition { get { if (_screenPosition == null) { return new Vector2(); } else { return _screenPosition; } } set { _screenPosition = value; } }
 
-        [XmlElement(ElementName = "name")]
+        [XmlElement(ElementName = "Name")]
         public string Name { get { return name; } set {
                 if (value != null || value != "") {
                     name = value;
@@ -92,7 +93,7 @@ namespace ComputingProject
         [XmlElement(ElementName = "radius")]
         public double radius { get { return _radius; } set { if (value > 0 && value < 100) { _radius = value; } } }
 
-        [XmlElement(ElementName = "object_visuals")]
+        [XmlElement(ElementName = "visuals")]
         public ObjectVisuals visuals { get; set; }
         #endregion
          

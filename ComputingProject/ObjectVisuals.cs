@@ -5,13 +5,14 @@ using System.ComponentModel;
 
 namespace ComputingProject {
     [Serializable]
+    [XmlRoot("ObjectVisuals")]
     public class ObjectVisuals {
         [XmlIgnore]
         public SolidColorBrush colour { get; set; }
         [XmlElement(ElementName = "size")]
         public int size { get; set; }
 
-        [XmlElement(ElementName = "colour_name")]
+        [XmlElement(ElementName = "colourName")]
         public string colourName { get; set; }
 
         BrushConverter converter = new BrushConverter();
