@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 namespace ComputingProject
 {
     [Serializable]
+    [XmlRoot(ElementName = "CelestialObject")]
     public class CelestialObject : IQuadtreeObject
     {
         #region Variables
@@ -20,7 +21,9 @@ namespace ComputingProject
         private Vector2 _position;
         private Vector2 _screenPosition;
 
+        [XmlElement(ElementName = "mass")]
         public double Mass { get { return mass; } set { if (value > 0) { mass = value; } } }
+        [XmlElement(ElementName = "total_velocity")]
         public double TotalVelocity { get { return totalVelocity; } set {
                 double radians = Bearing * Constants.DegreesToRadians;
                 double x = value * Math.Cos(radians);
@@ -37,10 +40,13 @@ namespace ComputingProject
                 totalVelocity = value;
             }
         } // Split into X and Y 
+        [XmlElement(ElementName = "velocity")]
         public Vector2 velocity { get; set; }
 
+        [XmlElement(ElementName = "bearing")]
         public double Bearing { get; set; } // The bearing in degrees
 
+        [XmlElement(ElementName = "position")]
         public Vector2 position { get { return _position; } set {
                 if (collider != null) {
 
@@ -64,8 +70,10 @@ namespace ComputingProject
             }
         }
 
+        [XmlElement(ElementName = "screen_position")]
         public  Vector2 screenPosition { get { if (_screenPosition == null) { return new Vector2(); } else { return _screenPosition; } } set { _screenPosition = value; } }
-    
+
+        [XmlElement(ElementName = "name")]
         public string Name { get { return name; } set {
                 if (value != null || value != "") {
                     name = value;
@@ -81,8 +89,10 @@ namespace ComputingProject
 
         // Radius of the graphic and the collider (if it is a circle collider)
         private double _radius;
+        [XmlElement(ElementName = "radius")]
         public double radius { get { return _radius; } set { if (value > 0 && value < 100) { _radius = value; } } }
 
+        [XmlElement(ElementName = "object_visuals")]
         public ObjectVisuals visuals { get; set; }
         #endregion
          

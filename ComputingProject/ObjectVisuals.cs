@@ -8,8 +8,10 @@ namespace ComputingProject {
     public class ObjectVisuals {
         [XmlIgnore]
         public SolidColorBrush colour { get; set; }
+        [XmlElement(ElementName = "size")]
         public int size { get; set; }
 
+        [XmlElement(ElementName = "colour_name")]
         public string colourName { get; set; }
 
         BrushConverter converter = new BrushConverter();
@@ -21,6 +23,10 @@ namespace ComputingProject {
 
         public ObjectVisuals(SolidColorBrush colour, int size) {
             Set(colour, size);
+        }
+
+        public ObjectVisuals(string colourName, int size) {
+            Set(colourName, size);
         }
 
         public void Set(SolidColorBrush colour) {
@@ -45,6 +51,16 @@ namespace ComputingProject {
 
         public void Set(SolidColorBrush colour, int size) {
             Set(colour);
+            Set(size);
+        }
+
+        public void Set(string colourName, int size) {
+            try {
+                colour = (SolidColorBrush)new BrushConverter().ConvertFromString(colourName);
+            }
+            catch {
+                Console.WriteLine("Colour not valid.");
+            }
             Set(size);
         }
 
