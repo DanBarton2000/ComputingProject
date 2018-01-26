@@ -10,7 +10,7 @@ namespace ComputingProject
 {
     public class Save
     {
-        [XmlArray("objects")]
+        [XmlArray(ElementName = "objects")]
         static List<CelestialObject> objects;
 
         public static void WriteXML(string filename) {
@@ -20,24 +20,11 @@ namespace ComputingProject
 
             Console.WriteLine("Path: " + path);
 
-            /*
-            FileStream stream = File.Create(path);
-
-            List<IQuadtreeObject> objects = new List<IQuadtreeObject>();
-
-            ObjectManager.AllObjects.ForEach(x => objects.Add(x));
-
-            objects.ForEach(x => Console.WriteLine(x.ToString()));
-
-            writer.Serialize(stream, objects);
-
-            stream.Close(); */
-
             objects = new List<CelestialObject>();
 
             ObjectManager.AllObjects.ForEach(x => objects.Add(x as CelestialObject));
 
-            using (FileStream stream = File.OpenWrite(path)) {
+            using (FileStream stream = File.Create(path)) {
                 writer.Serialize(stream, objects);
             }
         }
