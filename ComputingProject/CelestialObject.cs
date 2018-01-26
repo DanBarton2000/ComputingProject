@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Windows.Shapes;
-//using System.Windows.Media;
-using System.Drawing;
 using ComputingProject.Collision;
 using System.Xml.Serialization;
 
@@ -85,7 +82,7 @@ namespace ComputingProject
             }
         }
 
-        [XmlIgnore]
+        [XmlElement(ElementName = "collider")]
         public Collider2D collider { get; set; }
 
         // Radius of the graphic and the collider (if it is a circle collider)
@@ -127,6 +124,7 @@ namespace ComputingProject
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
                     cc.centre.Set(position.x, position.y);
+                    radius = cc.radius;
                 }
             }
 
@@ -158,6 +156,7 @@ namespace ComputingProject
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
                     cc.centre.Set(position.x, position.y);
+                    radius = cc.radius;
                 }
             }
 
@@ -183,6 +182,7 @@ namespace ComputingProject
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
                     cc.centre.Set(position.x, position.y);
+                    radius = cc.radius;
                 }
             }
 

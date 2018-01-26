@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,10 @@ namespace ComputingProject.Collision
     [Serializable]
     public class CircleCollider : Collider2D
     {
-        public Vector2 centre { get; private set; }
-        public double radius { get; private set; }
+        [XmlElement(ElementName = "centre")]
+        public Vector2 centre { get; set; }
+        [XmlElement(ElementName = "radius")]
+        public double radius { get; set; }
 
         public CircleCollider() { }
 
