@@ -13,7 +13,8 @@ namespace ComputingProject {
         public int size { get; set; }
 
         [XmlElement(ElementName = "colourName")]
-        public string colourName { get; set; }
+        public string colourName { get { return _colourName; } set { _colourName = value; colour = (SolidColorBrush)new BrushConverter().ConvertFromString(colourName); } }
+        private string _colourName;
 
         BrushConverter converter = new BrushConverter();
 
