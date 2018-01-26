@@ -169,8 +169,19 @@ namespace ComputingProject
             this.name = name;
             this.mass = mass;
 
-            this.velocity = velocity;
-            this.screenPosition = screenPosition;
+            if (velocity != null) {
+                this.velocity = velocity;
+            }
+            else {
+                this.velocity = new Vector2();
+            }
+
+            if (screenPosition != null) {
+                this.screenPosition = screenPosition;
+            }
+            else {
+                this.screenPosition = new Vector2();
+            }
 
             position = new Vector2();
 
