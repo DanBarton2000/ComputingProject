@@ -7,7 +7,8 @@ namespace ComputingProject {
     [XmlRoot("ObjectVisuals")]
     public class ObjectVisuals {
         [XmlIgnore]
-        public SolidColorBrush colour { get; set; }
+        public SolidColorBrush colour { get { return _colour;  } set { _colour = value; _colourName = new BrushConverter().ConvertToString(value); } }
+        SolidColorBrush _colour;
         [XmlElement(ElementName = "size")]
         public int size { get; set; }
 
