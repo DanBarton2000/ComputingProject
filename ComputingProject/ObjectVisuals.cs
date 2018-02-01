@@ -45,8 +45,8 @@ namespace ComputingProject {
             if (size < 5) {
                 this.size = 5;
             }
-            else if (size > 200) {
-                this.size = 200;
+            else if (size > 150) {
+                this.size = 150;
             }
             else {
                 this.size = size;
