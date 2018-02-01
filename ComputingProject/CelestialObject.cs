@@ -198,7 +198,7 @@ namespace ComputingProject
             if (collider != null) {
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
-                    cc.centre.Set(position.x, position.y);
+                    cc.centre.Set(position);
                     visuals.size = (int)cc.radius;
                 }
             }
