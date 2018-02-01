@@ -195,8 +195,6 @@ namespace ComputingProject
 
             collider = col;
 
-            screenPosition = new Vector2();
-
             if (collider != null) {
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
