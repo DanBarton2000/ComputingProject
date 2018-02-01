@@ -22,7 +22,7 @@ namespace ComputingProject {
 
         public ObjectVisuals() {
             colour = Brushes.White;
-            size = 40;
+            size = 20;
         }
 
         public ObjectVisuals(SolidColorBrush colour, int size) {
