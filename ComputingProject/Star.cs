@@ -26,7 +26,7 @@ namespace ComputingProject
         }
 
         public double LifeTime() {
-            return (SolarMassOfStar / Constants.SolarMass) * Math.Pow(10, 10);
+            return Math.Pow(Mass/Constants.SolarMass, -2.5) * Math.Pow(10, 10);
         }
 
         public double[] HabitableZone() {
