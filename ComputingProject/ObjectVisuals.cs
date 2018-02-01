@@ -69,7 +69,7 @@ namespace ComputingProject {
         }
 
         public override string ToString() {
-            return "Colour: " + colour.ToString() + " Size: " + size.ToString();
+            return "Colour: " + colourName + " Size: " + size.ToString();
         }
     }
 }
