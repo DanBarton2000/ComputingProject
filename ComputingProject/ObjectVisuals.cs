@@ -10,7 +10,7 @@ namespace ComputingProject {
         public SolidColorBrush colour { get { return _colour;  } set { _colour = value; _colourName = new BrushConverter().ConvertToString(value); } }
         SolidColorBrush _colour;
         [XmlIgnore]
-        int _size;
+        private int _size;
         [XmlElement(ElementName = "size")]
         public int size { get { return _size; } set { if (value > 0 && value < 100) { _size = value; } } }
 

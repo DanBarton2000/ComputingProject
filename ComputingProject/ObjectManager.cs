@@ -16,7 +16,6 @@ namespace ComputingProject
         private static double fx, fy;
 
         [XmlArray]
-        [XmlElement("AllObjects")]
         public static List<IQuadtreeObject> AllObjects { get; private set; } = new List<IQuadtreeObject>();
         #endregion
 
@@ -107,6 +106,10 @@ namespace ComputingProject
                 co.position.y += co.velocity.y * timeStep;
 
                 co.screenPosition = co.position * scale;
+                if (co.collider.colliderType == ColliderType.Circle) {
+                    CircleCollider cc = (CircleCollider)co.collider;
+                    cc.centre = co.position;
+                }
 
                 // Check if the object is outside the screen. 
                 // If it is, invert the velocity.
@@ -140,16 +143,27 @@ namespace ComputingProject
             }
         }
 
+        /// <summary>
+        /// Add a list of objects to the object list
+        /// </summary>
+        /// <param name="objects"></param>
         public static void AddRange(List<IQuadtreeObject> objects) {
             if (objects != null) {
                 AllObjects.AddRange(objects);
             }
         }
 
+        /// <summary>
+        /// Clear the list of objects
+        /// </summary>
         public static void ClearObjects() {
             AllObjects.Clear();
         }
 
+        /// <summary>
+        /// Set the bounds of the screen
+        /// </summary>
+        /// <param name="bounds"></param>
         public static void SetScreenBounds(Vector2 bounds) {
             screenBounds = bounds;
         }
