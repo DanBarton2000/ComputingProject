@@ -86,9 +86,10 @@ namespace ComputingProject
         public Collider2D collider { get; set; }
 
         // Radius of the graphic and the collider (if it is a circle collider)
-        private double _radius;
+        /* private double _radius;
         [XmlElement(ElementName = "radius")]
         public double radius { get { return _radius; } set { if (value > 0 && value < 100) { _radius = value; } } }
+        */
 
         [XmlElement(ElementName = "visuals")]
         public ObjectVisuals visuals { get; set; }
@@ -124,7 +125,7 @@ namespace ComputingProject
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
                     cc.centre.Set(position.x, position.y);
-                    radius = cc.radius;
+                    visuals.size = (int)cc.radius;
                 }
             }
 
@@ -157,7 +158,7 @@ namespace ComputingProject
                     CircleCollider cc = (CircleCollider)collider;
                     cc.centre.Set(position.x, position.y);
                     if (cc.radius > 0) {
-                        radius = cc.radius;
+                        visuals.size = (int)cc.radius;
                     }
                 }
             }
@@ -200,7 +201,7 @@ namespace ComputingProject
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
                     cc.centre.Set(position.x, position.y);
-                    radius = cc.radius;
+                    visuals.size = (int)cc.radius;
                 }
             }
 
