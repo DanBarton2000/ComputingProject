@@ -28,5 +28,21 @@ namespace ComputingProject
                 writer.Serialize(stream, objects);
             }
         }
+
+        public static void WriteXML(string filePath, string filename) {
+            XmlSerializer writer = new XmlSerializer(typeof(List<CelestialObject>));
+
+            string path = filePath + "\\" + filename + ".xml";
+
+            Console.WriteLine("Path: " + path);
+
+            objects = new List<CelestialObject>();
+
+            ObjectManager.AllObjects.ForEach(x => objects.Add(x as CelestialObject));
+
+            using (FileStream stream = File.Create(path)) {
+                writer.Serialize(stream, objects);
+            }
+        }
     }
 }
