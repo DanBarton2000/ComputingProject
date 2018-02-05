@@ -106,9 +106,13 @@ namespace ComputingProject
                 co.position.y += co.velocity.y * timeStep;
 
                 co.screenPosition = co.position * scale;
-                if (co.collider.colliderType == ColliderType.Circle) {
-                    CircleCollider cc = (CircleCollider)co.collider;
-                    cc.centre = co.position;
+
+                // Update the position of the collider
+                if (!(co.collider == null)) {
+                    if (co.collider.colliderType == ColliderType.Circle) {
+                        ((CircleCollider)co.collider).centre.Set(co.position);
+                        
+                    }
                 }
 
                 // Check if the object is outside the screen. 

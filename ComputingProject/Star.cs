@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ComputingProject.Collision;
+using System.Xml.Serialization;
 
 namespace ComputingProject
 {
+    [Serializable]
+    [XmlRoot(ElementName = "Star")]
     public class Star : CelestialObject
     {
         public Star() { }
@@ -15,11 +18,13 @@ namespace ComputingProject
 
         }
 
+        [XmlElement]
         public double SolarMassOfStar { get {
                 return Mass / Constants.SolarMass;
             }
         }
 
+        [XmlElement]
         public double Luminosity { get {
                 return Constants.SolarLuminosity * Math.Pow(SolarMassOfStar, 3.5);
             }

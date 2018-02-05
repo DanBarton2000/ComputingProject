@@ -6,6 +6,7 @@ namespace ComputingProject
 {
     [Serializable]
     [XmlRoot(ElementName = "CelestialObject")]
+    [XmlInclude(typeof(Star))]
     public class CelestialObject : IQuadtreeObject
     {
         #region Variables

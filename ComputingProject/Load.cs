@@ -9,19 +9,23 @@ using System.IO;
 namespace ComputingProject {
 
     public class Load {
-        public static List<CelestialObject> ReadXML(string filename) {
+        public static List<CelestialObject> ReadXML(string path) {
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + filename + ".xml";
 
             XmlSerializer serializer = new XmlSerializer(typeof(List<CelestialObject>));
 
             List<CelestialObject> objects;
+            try {
+                using (FileStream stream = File.OpenRead(path)) {
+                    objects = (List<CelestialObject>)serializer.Deserialize(stream);
 
-            using (FileStream stream = File.OpenRead(path)) {
-                objects = (List<CelestialObject>)serializer.Deserialize(stream);
-
-                // Print out each object
-                objects.ForEach(x => Console.WriteLine(x.ToString()));
+                    // Print out each object
+                    objects.ForEach(x => Console.WriteLine(x.ToString()));
+                }
+            }
+            catch(Exception e) {
+                Console.WriteLine(e.ToString());
+                return null;
             }
 
             return objects;

@@ -13,18 +13,16 @@ namespace ComputingProject
         [XmlArray(ElementName = "objects")]
         static List<CelestialObject> objects;
 
-        public static void WriteXML(string filename) {
+        public static void WriteXML(string filePath) {
             XmlSerializer writer = new XmlSerializer(typeof(List<CelestialObject>));
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + filename + ".xml";
-
-            Console.WriteLine("Path: " + path);
+            Console.WriteLine("Path: " + filePath);
 
             objects = new List<CelestialObject>();
 
             ObjectManager.AllObjects.ForEach(x => objects.Add(x as CelestialObject));
 
-            using (FileStream stream = File.Create(path)) {
+            using (FileStream stream = File.Create(filePath /*+ ".xml"*/)) {
                 writer.Serialize(stream, objects);
             }
         }
