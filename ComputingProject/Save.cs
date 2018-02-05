@@ -22,7 +22,7 @@ namespace ComputingProject
 
             ObjectManager.AllObjects.ForEach(x => objects.Add(x as CelestialObject));
 
-            using (FileStream stream = File.Create(filePath /*+ ".xml"*/)) {
+            using (FileStream stream = File.Create(filePath)) {
                 writer.Serialize(stream, objects);
             }
         }

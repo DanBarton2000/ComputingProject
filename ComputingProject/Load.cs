@@ -10,8 +10,6 @@ namespace ComputingProject {
 
     public class Load {
         public static List<CelestialObject> ReadXML(string path) {
-
-
             XmlSerializer serializer = new XmlSerializer(typeof(List<CelestialObject>));
 
             List<CelestialObject> objects;

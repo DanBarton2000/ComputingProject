@@ -125,8 +125,7 @@ namespace ComputingProject
             if (collider != null) {
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
-                    cc.centre.Set(position.x, position.y);
-                    visuals.size = (int)cc.radius;
+                    cc.centre.Set(position);
                 }
             }
 
@@ -157,10 +156,7 @@ namespace ComputingProject
             if (collider != null) {
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
-                    cc.centre.Set(position.x, position.y);
-                    if (cc.radius > 0) {
-                        visuals.size = (int)cc.radius;
-                    }
+                    cc.centre.Set(position);
                 }
             }
 
@@ -200,11 +196,15 @@ namespace ComputingProject
                 if (collider.colliderType == ColliderType.Circle) {
                     CircleCollider cc = (CircleCollider)collider;
                     cc.centre.Set(position);
-                    visuals.size = (int)cc.radius;
                 }
             }
 
-            this.visuals = visuals;
+            if (screenPosition != null) {
+                this.screenPosition = screenPosition;
+            }
+            else {
+                this.screenPosition = new Vector2();
+            }
 
             ObjectManager.AddObject(this);
         }
