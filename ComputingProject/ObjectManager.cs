@@ -83,7 +83,7 @@ namespace ComputingProject
                 forces.Add(co, totalForces);
             }
 
-            if (DebugTools.DebugMode) {
+            if (DebugTools.PrintForces) {
                 forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1) + "\n"));
             }
 

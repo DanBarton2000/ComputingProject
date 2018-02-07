@@ -224,6 +224,12 @@ namespace ComputingProject
 
             double distance = Vector2.DistanceSqr(position, co.position);
 
+            if (DebugTools.PrintForces) {
+                Console.WriteLine("Celestial Object Attraction() - Distance: " + Math.Sqrt(distance));
+                Console.WriteLine(Name + " Position: " + position.ToString());
+                Console.WriteLine(co.Name + " Position: " + co.position.ToString());
+            }
+
 
             // If the objects are on top of each other, a DivideByZero error would occur so return
             if (distance == 0) {

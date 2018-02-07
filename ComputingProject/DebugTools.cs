@@ -17,5 +17,7 @@ namespace ComputingProject {
         public static bool PrintCollisionVelocities = true;
         // Update the visuals or not
         public static bool UpdateVisuals = true;
+        // Print the forces to the console
+        public static bool PrintForces = true;
     }
 }
