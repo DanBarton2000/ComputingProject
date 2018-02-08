@@ -64,6 +64,7 @@ namespace ComputingProject
                 return;
             }
 
+            // Calculate the forcees put on an object and add the components together
             Dictionary<IQuadtreeObject, double[]> forces = new Dictionary<IQuadtreeObject, double[]>();
             foreach (IQuadtreeObject co in AllObjects.ToList()) {
                 fx = 0;
@@ -89,12 +90,21 @@ namespace ComputingProject
 
             foreach (IQuadtreeObject co in AllObjects.ToList()) {
                 double[] f = forces[co];
-                double massTimeStep = co.Mass * timeStep;
+                //double massTimeStep = co.Mass * timeStep;
+                double massTimeStep = co.Mass / timeStep;
                 double x = f[0] / massTimeStep;
                 double y = f[1] / massTimeStep;
 
+                if (DebugTools.DebugMode) {
+                    Console.WriteLine("\nObject: " + co.Name);
+                    Console.WriteLine("Velocity Before: " + co.velocity);
+                }
+
                 // Update the velocity
                 co.velocity.Add(x, y);
+
+                if(DebugTools.DebugMode)
+                    Console.WriteLine("Velocity After: " + co.velocity + "\n");
 
                 // Update collisions
                 if (DebugTools.UseCollision) {
