@@ -9,7 +9,7 @@ using System.IO;
 namespace ComputingProject {
 
     public class Load {
-        public static List<CelestialObject> ReadXML(string path) {
+        public static List<CelestialObject> ReadXMLFromPath(string path) {
             XmlSerializer serializer = new XmlSerializer(typeof(List<CelestialObject>));
 
             List<CelestialObject> objects;
@@ -21,7 +21,26 @@ namespace ComputingProject {
                     objects.ForEach(x => Console.WriteLine(x.ToString()));
                 }
             }
-            catch(Exception e) {
+            catch (Exception e) {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+
+            return objects;
+        }
+
+        public static List<CelestialObject> ReadXML(string xml) {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<CelestialObject>));
+            List<CelestialObject> objects;
+            try {
+                using (var reader = new StringReader(xml)) {
+                    objects = (List<CelestialObject>)serializer.Deserialize(reader);
+                }
+
+                // Print out each object
+                objects.ForEach(x => Console.WriteLine(x.ToString()));
+            }
+            catch (Exception e) {
                 Console.WriteLine(e.ToString());
                 return null;
             }
