@@ -48,101 +48,104 @@ namespace ComputingProject
         /// <param name="tree"></param>
         /// <param name="velocityRebound"></param>
         public static void Update(double timeStep, double scale, QuadTree<IQuadtreeObject> tree, double velocityRebound = -1) {
+            object lockObj = new object();
 
-            // Checking to make sure that there is a Quadtree available
-            if (tree == null)
-                throw new Exception("Quadtree is null!");
+            lock (lockObj) {
+                // Checking to make sure that there is a Quadtree available
+                if (tree == null)
+                    throw new Exception("Quadtree is null!");
 
-            // If the simulation is paused, don't update
-            if (TimeController.isPaused) {
-                return;
-            }
+                // If the simulation is paused, don't update
+                if (TimeController.isPaused) {
+                    return;
+                }
 
-            // Check to see if there are objects in the list
-            // if not return
-            if (AllObjects == null) {
-                return;
-            }
+                // Check to see if there are objects in the list
+                // if not return
+                if (AllObjects == null) {
+                    return;
+                }
 
-            // Calculate the forcees put on an object and add the components together
-            Dictionary<IQuadtreeObject, double[]> forces = new Dictionary<IQuadtreeObject, double[]>();
-            foreach (IQuadtreeObject co in AllObjects.ToList()) {
-                fx = 0;
-                fy = 0;
-                foreach (IQuadtreeObject cobj in AllObjects.ToList()) {
+                // Calculate the forcees put on an object and add the components together
+                Dictionary<IQuadtreeObject, double[]> forces = new Dictionary<IQuadtreeObject, double[]>();
+                foreach (IQuadtreeObject co in AllObjects.ToList()) {
+                    fx = 0;
+                    fy = 0;
+                    foreach (IQuadtreeObject cobj in AllObjects.ToList()) {
 
-                    if (co != cobj) {
+                        if (co != cobj) {
 
-                        double[] force = co.Attraction(cobj);
-                        if (force != null) {
-                            fx += force[0];
-                            fy += force[1];
+                            double[] force = co.Attraction(cobj);
+                            if (force != null) {
+                                fx += force[0];
+                                fy += force[1];
+                            }
                         }
                     }
-                }
-                double[] totalForces = new double[2] { fx, fy };
-                forces.Add(co, totalForces);
-            }
-
-            if (DebugTools.PrintForces) {
-                forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1) + "\n"));
-            }
-
-            foreach (IQuadtreeObject co in AllObjects.ToList()) {
-                double[] f = forces[co];
-                //double massTimeStep = co.Mass * timeStep;
-                double massTimeStep = co.Mass / timeStep;
-                double x = f[0] / massTimeStep;
-                double y = f[1] / massTimeStep;
-
-                if (DebugTools.DebugMode) {
-                    Console.WriteLine("\nObject: " + co.Name);
-                    Console.WriteLine("Velocity Before: " + co.velocity);
+                    double[] totalForces = new double[2] { fx, fy };
+                    forces.Add(co, totalForces);
                 }
 
-                // Update the velocity
-                co.velocity.Add(x, y);
-
-                if(DebugTools.DebugMode)
-                    Console.WriteLine("Velocity After: " + co.velocity + "\n");
-
-                // Update collisions
-                if (DebugTools.UseCollision) {
-                    UpdateCollision(tree);
+                if (DebugTools.PrintForces) {
+                    forces.ToList().ForEach(x => Console.WriteLine("Object Manager - Key: " + x.Key.Name + "\tValues: " + x.Value.GetValue(0) + " : " + x.Value.GetValue(1) + "\n"));
                 }
 
-                // Update the position of the object
-                co.position.x += co.velocity.x * timeStep;
-                co.position.y += co.velocity.y * timeStep;
+                foreach (IQuadtreeObject co in AllObjects.ToList()) {
+                    double[] f = forces[co];
+                    //double massTimeStep = co.Mass * timeStep;
+                    double massTimeStep = co.Mass / timeStep;
+                    double x = f[0] / massTimeStep;
+                    double y = f[1] / massTimeStep;
 
-                co.screenPosition = co.position * scale;
-
-                // Update the position of the collider
-                if (!(co.collider == null)) {
-                    if (co.collider.colliderType == ColliderType.Circle) {
-                        ((CircleCollider)co.collider).centre.Set(co.position);
-                        
+                    if (DebugTools.DebugMode) {
+                        Console.WriteLine("\nObject: " + co.Name);
+                        Console.WriteLine("Velocity Before: " + co.velocity);
                     }
-                }
 
-                // Check if the object is outside the screen. 
-                // If it is, invert the velocity.
-                if (screenBounds != null && co != null) {
-                    if (co.position != null) {
-                        if (co.position.x < 0 || co.position.x > screenBounds.x) {
-                            co.velocity = new Vector2(co.velocity.x * velocityRebound, co.velocity.y * Math.Abs(velocityRebound));
-                        }
-                        else if (co.position.y < 0 || co.position.y > screenBounds.y) {
-                            co.velocity = new Vector2(co.velocity.x * Math.Abs(velocityRebound), co.velocity.y * velocityRebound);
+                    // Update the velocity
+                    co.velocity.Add(x, y);
+
+                    if (DebugTools.DebugMode)
+                        Console.WriteLine("Velocity After: " + co.velocity + "\n");
+
+                    // Update collisions
+                    if (DebugTools.UseCollision) {
+                        UpdateCollision(tree);
+                    }
+
+                    // Update the position of the object
+                    co.position.x += co.velocity.x * timeStep;
+                    co.position.y += co.velocity.y * timeStep;
+
+                    co.screenPosition = co.position * scale;
+
+                    // Update the position of the collider
+                    if (!(co.collider == null)) {
+                        if (co.collider.colliderType == ColliderType.Circle) {
+                            ((CircleCollider)co.collider).centre.Set(co.position);
+
                         }
                     }
-                }
 
-                // Print the position of the object to the console
-                if (DebugTools.DebugMode) {
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position * scale).ToString());
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
-                    Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces   - X: " + f[0] + " Y: " + f[1] + "\n");
+                    // Check if the object is outside the screen. 
+                    // If it is, invert the velocity.
+                    if (screenBounds != null && co != null) {
+                        if (co.position != null) {
+                            if (co.position.x < 0 || co.position.x > screenBounds.x) {
+                                co.velocity = new Vector2(co.velocity.x * velocityRebound, co.velocity.y * Math.Abs(velocityRebound));
+                            }
+                            else if (co.position.y < 0 || co.position.y > screenBounds.y) {
+                                co.velocity = new Vector2(co.velocity.x * Math.Abs(velocityRebound), co.velocity.y * velocityRebound);
+                            }
+                        }
+                    }
+
+                    // Print the position of the object to the console
+                    if (DebugTools.DebugMode) {
+                        Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tPosition - " + (co.position * scale).ToString());
+                        Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tVelocity - " + co.velocity.ToString());
+                        Console.WriteLine("Object Manager - OBJ: " + co.Name + " \tForces   - X: " + f[0] + " Y: " + f[1] + "\n");
+                    }
                 }
             }
         }
