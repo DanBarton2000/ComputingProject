@@ -125,6 +125,12 @@ namespace ComputingProject
             return Math.Sqrt(Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2));
         }
 
+        /// <summary>
+        /// Works out the distance squared between 2 vectors
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static double DistanceSqr(Vector2 v1, Vector2 v2) {
             if (v1 == null || v2 == null) {
                 return 0;
@@ -132,6 +138,12 @@ namespace ComputingProject
             return Math.Pow(DifferenceX(v1, v2), 2) + Math.Pow(DifferenceY(v1, v2), 2);
         }
 
+        /// <summary>
+        /// Works out the X difference between 2 vectors
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static double DifferenceX(Vector2 v1, Vector2 v2) {
             if (v1 == null || v2 == null) {
                 return 0;
@@ -139,6 +151,12 @@ namespace ComputingProject
             return v2.x - v1.x;
         }
 
+        /// <summary>
+        /// Works out the Y difference between 2 vectors
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static double DifferenceY(Vector2 v1, Vector2 v2) {
             if (v1 == null || v2 == null) {
                 return 0;
@@ -146,6 +164,12 @@ namespace ComputingProject
             return v2.y - v1.y;
         }
 
+        /// <summary>
+        /// Adds 2 vectors together
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Vector2 operator +(Vector2 v1, Vector2 v2) {
             if (v1 == null && v2 == null) {
                 return new Vector2();
@@ -160,6 +184,12 @@ namespace ComputingProject
             return new Vector2(v1.x + v2.x, v1.y + v2.y);
         }
 
+        /// <summary>
+        /// Subtracts 2 vectors together
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Vector2 operator -(Vector2 v1, Vector2 v2) {
             if (v1 == null && v2 == null) {
                 return new Vector2();
@@ -173,14 +203,25 @@ namespace ComputingProject
             return new Vector2(v1.x - v2.x, v1.y - v2.y);
         }
 
-        public static Vector2 operator *(Vector2 v1, double scaler)
-        {
+        /// <summary>
+        /// Works out the product between a vector and a scaler
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="scaler"></param>
+        /// <returns></returns>
+        public static Vector2 operator *(Vector2 v1, double scaler) {
             if (ReferenceEquals(v1, null)) {
                 return null;
             }
             return new Vector2(v1.x * scaler, v1.y * scaler);
         }
 
+        /// <summary>
+        /// Works out the product between a vector and a scaler
+        /// </summary>
+        /// <param name="scaler"></param>
+        /// <param name="v1"></param>
+        /// <returns></returns>
         public static Vector2 operator *(double scaler, Vector2 v1) {
             if (ReferenceEquals(v1, null)) {
                 return null;
@@ -188,11 +229,23 @@ namespace ComputingProject
             return new Vector2(v1.x * scaler, v1.y * scaler);
         }
 
+        /// <summary>
+        /// Divides a vector by a scaler
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="scaler"></param>
+        /// <returns></returns>
         public static Vector2 operator /(Vector2 v1, double scaler)
         {
             return new Vector2(v1.x / scaler, v1.y / scaler);
         }
 
+        /// <summary>
+        /// Equality operator
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator ==(Vector2 v1, Vector2 v2)
         {
             if (!ReferenceEquals(v1, null) && !ReferenceEquals(v2, null)) {
@@ -204,6 +257,12 @@ namespace ComputingProject
             return false;
         }
 
+        /// <summary>
+        /// Not equal operator
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator !=(Vector2 v1, Vector2 v2)
         {
             if (!ReferenceEquals(v1, null) && !ReferenceEquals(v2, null)) {

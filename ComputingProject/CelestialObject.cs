@@ -268,6 +268,12 @@ namespace ComputingProject
         #endregion
 
         #region Static Methods
+        /// <summary>
+        /// Spawns a copy of an object at a new position
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="newPosition"></param>
+        /// <returns></returns>
         public static CelestialObject SpawnCopy(CelestialObject co, Vector2 newPosition) {
             CelestialObject coObj = new CelestialObject(co.Name + "_COPY", co.Mass, new Vector2(co.velocity.x, co.velocity.y), newPosition, co.collider, co.visuals);
 

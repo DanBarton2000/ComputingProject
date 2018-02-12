@@ -13,6 +13,10 @@ namespace ComputingProject
         [XmlArray(ElementName = "objects")]
         static List<CelestialObject> objects;
 
+        /// <summary>
+        /// Writes a xml file from a file path
+        /// </summary>
+        /// <param name="filePath"></param>
         public static void WriteXML(string filePath) {
             XmlSerializer writer = new XmlSerializer(typeof(List<CelestialObject>));
 
@@ -27,6 +31,11 @@ namespace ComputingProject
             }
         }
 
+        /// <summary>
+        /// Writes a xml file from a file path and a filename
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="filename"></param>
         public static void WriteXML(string filePath, string filename) {
             XmlSerializer writer = new XmlSerializer(typeof(List<CelestialObject>));
 

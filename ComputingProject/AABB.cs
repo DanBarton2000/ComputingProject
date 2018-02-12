@@ -16,6 +16,11 @@ namespace ComputingProject.Collision
             this.halfDimension = halfDimension;
         }
 
+        /// <summary>
+        /// Checks to see if a point is contained in the AABB
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public bool ContainsPoint(Vector2 point) {
             double minX = centre.x - halfDimension.x;
             double minY = centre.y - halfDimension.y;
@@ -28,6 +33,11 @@ namespace ComputingProject.Collision
             return true;
         }
 
+        /// <summary>
+        /// Method that checks to see if an AABB is intersecting this AABB
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns></returns>
         public bool IntersectsAABB(AABB box) {
             bool minX = centre.x + halfDimension.x > box.centre.x - box.halfDimension.x;
             bool maxX = centre.x - halfDimension.x < box.centre.x + box.halfDimension.x;

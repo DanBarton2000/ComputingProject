@@ -9,6 +9,11 @@ using System.IO;
 namespace ComputingProject {
 
     public class Load {
+        /// <summary>
+        /// Reads XML from a path and returns the objects 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static List<CelestialObject> ReadXMLFromPath(string path) {
             XmlSerializer serializer = new XmlSerializer(typeof(List<CelestialObject>));
 
@@ -21,7 +26,7 @@ namespace ComputingProject {
                     objects.ForEach(x => Console.WriteLine(x.ToString()));
                 }
             }
-            catch(Exception e) {
+            catch (Exception e) {
                 Console.WriteLine(e.ToString());
                 return null;
             }
@@ -29,6 +34,11 @@ namespace ComputingProject {
             return objects;
         }
 
+        /// <summary>
+        /// Reads the XML directly and returns the objects
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
         public static List<CelestialObject> ReadXML(string xml) {
             XmlSerializer serializer = new XmlSerializer(typeof(List<CelestialObject>));
             List<CelestialObject> objects;
@@ -38,7 +48,7 @@ namespace ComputingProject {
                 }
 
                 // Print out each object
-                objects.ForEach(x => Console.WriteLine(x.ToString()));    
+                objects.ForEach(x => Console.WriteLine(x.ToString()));
             }
             catch (Exception e) {
                 Console.WriteLine(e.ToString());

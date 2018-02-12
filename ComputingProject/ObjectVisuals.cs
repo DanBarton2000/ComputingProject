@@ -33,6 +33,10 @@ namespace ComputingProject {
             Set(colourName, size);
         }
 
+        /// <summary>
+        /// Sets the colour
+        /// </summary>
+        /// <param name="colour"></param>
         public void Set(SolidColorBrush colour) {
             if (colour == null) {
                 this.colour = Brushes.White;
@@ -41,6 +45,10 @@ namespace ComputingProject {
             colourName = converter.ConvertToString(this.colour);
         }
 
+        /// <summary>
+        /// Sets the size
+        /// </summary>
+        /// <param name="size"></param>
         public void Set(int size) {
             if (size < 5) {
                 this.size = 5;
@@ -53,11 +61,21 @@ namespace ComputingProject {
             }
         }
 
+        /// <summary>
+        /// Sets the colour and the size
+        /// </summary>
+        /// <param name="colour"></param>
+        /// <param name="size"></param>
         public void Set(SolidColorBrush colour, int size) {
             Set(colour);
             Set(size);
         }
 
+        /// <summary>
+        /// Sets the colour from a string and the size
+        /// </summary>
+        /// <param name="colourName"></param>
+        /// <param name="size"></param>
         public void Set(string colourName, int size) {
             try {
                 colour = (SolidColorBrush)new BrushConverter().ConvertFromString(colourName);
