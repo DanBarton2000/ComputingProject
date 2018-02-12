@@ -247,9 +247,6 @@ namespace ComputingProject
         // Update the velocites of the objects
         static Vector2[] OnCollision(IQuadtreeObject obj1, IQuadtreeObject obj2) {
 
-            // Implement MTV to fix issues
-            // https://blogs.msdn.microsoft.com/faber/2013/01/09/elastic-collisions-of-balls/
-
             Vector2[] velocities = new Vector2[2];
 
             double combinedMasses = obj1.Mass + obj2.Mass;

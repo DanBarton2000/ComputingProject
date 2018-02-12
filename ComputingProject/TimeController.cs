@@ -17,6 +17,9 @@ namespace ComputingProject {
             currentTimeStep = timeStep;
         }
 
+        /// <summary>
+        /// Pause the simulation
+        /// </summary>
         public void Pause() {
             if (isPaused)
                 return;
@@ -26,6 +29,9 @@ namespace ComputingProject {
             currentTimeStep = 0;
         }
 
+        /// <summary>
+        /// Un pause the simulation
+        /// </summary>
         public void UnPause() {
             if (!isPaused)
                 return;
@@ -34,10 +40,17 @@ namespace ComputingProject {
             currentTimeStep = pauseTimeStep;
         }
 
+        /// <summary>
+        /// Change the speed by a scalar
+        /// </summary>
+        /// <param name="scalar"></param>
         public void SpeedUp(double scalar) {
             currentTimeStep *= scalar;
         }
 
+        /// <summary>
+        /// The timestep is set to the default timestep
+        /// </summary>
         public void DefaultSpeed() {
             currentTimeStep = defaultTimeStep;
         }

@@ -36,6 +36,12 @@ namespace ComputingProject.Collision
             return false;
         }
 
+        /// <summary>
+        /// Checks to see if 2 circles are colliding
+        /// </summary>
+        /// <param name="col1"></param>
+        /// <param name="col2"></param>
+        /// <returns></returns>
         public static bool IsCollidingCircles(CircleCollider col1, CircleCollider col2) {
             Vector2 v = col1.centre - col2.centre;
             if (v.Magnitude < col1.radius + col2.radius) {
@@ -44,6 +50,12 @@ namespace ComputingProject.Collision
             return false;
         }
 
+        /// <summary>
+        /// Checks to see if a polygon and a circle are colliding
+        /// </summary>
+        /// <param name="col1"></param>
+        /// <param name="col2"></param>
+        /// <returns></returns>
         public static bool IsCollidingPolygonCircle(PolygonCollider col1, CircleCollider col2) {
             List<Vector2> edges = new List<Vector2>();
             edges = CalculateEdges(col1.Vertices);
@@ -55,6 +67,12 @@ namespace ComputingProject.Collision
             return false;
         }
 
+        /// <summary>
+        /// Checks to see if 2 polygons are colliding
+        /// </summary>
+        /// <param name="col1"></param>
+        /// <param name="col2"></param>
+        /// <returns></returns>
         public static bool IsCollidingPolygons(PolygonCollider col1, PolygonCollider col2) {
             List<Vector2> edges = CalculateEdges(col1.Vertices);
             edges.AddRange(CalculateEdges(col2.Vertices));
@@ -75,6 +93,11 @@ namespace ComputingProject.Collision
             return true;
         }
 
+        /// <summary>
+        /// Calculates the edges 
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <returns></returns>
         static List<Vector2> CalculateEdges(List<Vector2> vertices) {
             List<Vector2> edges = new List<Vector2>();
             int length = vertices.Count;
@@ -86,10 +109,22 @@ namespace ComputingProject.Collision
             return edges;
         }
 
+        /// <summary>
+        /// Calculates the normal from a vector
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public static Vector2 CalculateNormal(Vector2 point) {
             return new Vector2(-point.y, point.x);
         }
 
+        /// <summary>
+        /// Calculates if there is a separating axis between two polygon colliders
+        /// </summary>
+        /// <param name="normal"></param>
+        /// <param name="col1"></param>
+        /// <param name="col2"></param>
+        /// <returns></returns>
         static bool IsSeparatingAxis(Vector2 normal, PolygonCollider col1, PolygonCollider col2) {
             double min1 = double.PositiveInfinity;
             double max1 = double.NegativeInfinity;

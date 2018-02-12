@@ -61,7 +61,7 @@ namespace ComputingProject.Collision
 
             if (southEast.Insert(point))
                 return true;
-
+            
             return false;
         }
 

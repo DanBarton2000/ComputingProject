@@ -30,14 +30,25 @@ namespace ComputingProject
             }
         }
 
+        /// <summary>
+        /// Calculates the lifetime of a star
+        /// </summary>
+        /// <returns></returns>
         public double LifeTime() {
             return Math.Pow(Mass/Constants.SolarMass, -2.5) * Math.Pow(10, 10);
         }
 
+        /// <summary>
+        /// Calculates the habitable zone of the star
+        /// </summary>
+        /// <returns></returns>
         public double[] HabitableZone() {
             double[] zone = new double[2];
-            double outer = Math.Sqrt(Luminosity/0.53);
-            double inner = Math.Sqrt(Luminosity/1.1);
+
+            double absoluteLuminosity = 4.85 - 2.5 * Math.Log(Luminosity/Constants.SolarLuminosity);
+
+            double outer = Math.Sqrt(absoluteLuminosity / 0.53);
+            double inner = Math.Sqrt(absoluteLuminosity / 1.1);
 
             zone[0] = outer;
             zone[1] = inner;
