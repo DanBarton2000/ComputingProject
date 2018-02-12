@@ -48,8 +48,9 @@ namespace ComputingProject
         /// <param name="tree"></param>
         /// <param name="velocityRebound"></param>
         public static void Update(double timeStep, double scale, QuadTree<IQuadtreeObject> tree, double velocityRebound = -1) {
+            // Make sure that the this method is thread safe
             object lockObj = new object();
-
+            // Lock thread until this method has finished
             lock (lockObj) {
                 // Checking to make sure that there is a Quadtree available
                 if (tree == null)
@@ -92,7 +93,6 @@ namespace ComputingProject
 
                 foreach (IQuadtreeObject co in AllObjects.ToList()) {
                     double[] f = forces[co];
-                    //double massTimeStep = co.Mass * timeStep;
                     double massTimeStep = co.Mass / timeStep;
                     double x = f[0] / massTimeStep;
                     double y = f[1] / massTimeStep;
